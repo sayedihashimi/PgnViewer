@@ -3,4 +3,10 @@
 *@
 @{
 }
-<h2>view pgn here</h2>
+@model List<PgnViewer.Shared.GameSummary>
+
+    <h2>view pgn here</h2>
+
+@foreach(var game in Model){
+    <h2>@game</h2>
+}

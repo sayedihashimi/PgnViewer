@@ -1,7 +1,7 @@
 ﻿using ilf.pgn;
 using ilf.pgn.Data;
 using Newtonsoft.Json;
-using PgnViewerApi.Models;
+using PgnViewer.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
