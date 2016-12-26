@@ -1,12 +1,80 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model List<PgnViewer.Shared.GameSummary>
+﻿@model List<PgnViewer.Shared.GameSummary>
 
-    <h2>view pgn here</h2>
+<ol>
+    @foreach(var game in Model){
+        <li><a onclick="showgame(this);" data-pgn="@game.Pgn">@game.White - @game.Black</a></li>
+    }
+</ol>
 
-@foreach(var game in Model){
-    <h2>@game</h2>
+<script type="text/javascript">
+    function showgame(identifier) {
+        pgn = $(identifier).data('pgn')
+        alert('foo: [' + pgn + ']')
+    }
+</script>
+
+<script src="/chessground.js"></script>
+<!-- chess.js is NOT required by chessground. We include it for the examples. -->
+<script src="/examples/chess.min.js"></script>
+<script>
+      function chessToDests(chess) {
+        var dests = {};
+        chess.SQUARES.forEach(function(s) {
+          var ms = chess.moves({square: s, verbose: true});
+          if (ms.length) dests[s] = ms.map(function(m) { return m.to; });
+        });
+        return dests;
+      }
+      function chessToColor(chess) {
+        return (chess.turn() == "w") ? "white" : "black";
+      }
+</script>
+<section>
+    <div class="chessground small blue cburnett" id="ground7"></div>
+    <p>Play a game on a single board</p>
+    <script>
+            (function() {
+          var ground;
+          var chess = new Chess();
+          var onMove = function(orig, dest) {
+            chess.move({from: orig, to: dest});
+            ground.set({
+              turnColor: chessToColor(chess),
+              movable: {
+                color: chessToColor(chess),
+                dests: chessToDests(chess)
+              }
+            });
+            console.log(ground.getFen());
+          };
+          ground = Chessground(document.getElementById('ground7'), {
+            viewOnly: false,
+            turnColor: 'white',
+            animation: {
+              duration: 500
+            },
+            movable: {
+              free: false,
+              color: chessToColor(chess),
+              premove: true,
+              dests: chessToDests(chess),
+              events: {
+                after: onMove
+              }
+            },
+            drawable: {
+              enabled: true
+            }
+          });
+              window.cg6 = ground;
+        })();
+    </script>
+</section>
+
+@section inhead{
+    <!-- sayedha: inhead section -->
+    <link rel="stylesheet" href="/examples/example.css">
+    <link rel="stylesheet" href="/assets/base.css">
+    <link rel="stylesheet" href="/assets/theme.css">
+    <link rel="stylesheet" href="/assets/desktop.css">
 }

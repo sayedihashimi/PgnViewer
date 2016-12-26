@@ -14,6 +14,31 @@ namespace PgnViewerApi.Controllers
     public class PgnController : ApiController
     {
      
+        public List<MoveSummary> GetMoves([FromBody]string gamepgn)
+        {
+            PgnReader reader = new PgnReader();
+            Database pgnResult = reader.ReadFromString(gamepgn);
+            Game game = null;
+            List<MoveSummary> moves = new List<MoveSummary>();
+            if(pgnResult != null || pgnResult.Games != null && pgnResult.Games.Count >= 1)
+            {
+                game = pgnResult.Games[0];
+            }
+            if(game != null)
+            {
+                foreach(var move in game.MoveText.GetMoves())
+                {
+                    moves.Add(new MoveSummary
+                    {
+                        OriginSquare = move.OriginSquare.ToString(),
+                        TargetSquare = move.TargetSquare.ToString()
+                    });
+                }
+            }
+
+            return moves;
+        }
+
         [HttpPost]
         public List<GameSummary> GetGames([FromBody]string pgn)
         {
@@ -25,13 +50,24 @@ namespace PgnViewerApi.Controllers
                 List<GameSummary> summarylist = new List<GameSummary>();
                 foreach(var g in pgnResult.Games)
                 {
+                    var fen = (from ai in g.AdditionalInfo
+                               where string.Equals("fen", ai.Name, StringComparison.OrdinalIgnoreCase)
+                               select ai).FirstOrDefault();
+
+                    string fenstring = string.Empty;
+
+                    if (fen != null && !string.IsNullOrWhiteSpace(fen.Value))
+                    {
+                        fenstring = fen.Value;
+                    }
 
                     summarylist.Add(
                         new GameSummary
                         {
                             White = g.WhitePlayer,
                             Black = g.BlackPlayer,
-                            Pgn = g.ToString()
+                            Pgn = g.ToString(),
+                            Fenstring = fenstring
                         });
                 }
 
