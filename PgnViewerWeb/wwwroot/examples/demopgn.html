@@ -1,0 +1,152 @@
+﻿<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="example.css">
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <link rel="stylesheet" href="../assets/desktop.css">
+  </head>
+  <body>
+      <h2><a onclick="LoadPgn();" href="#">Load pgn</a></h2>
+
+    <script src="../chessground.js"></script>
+    <!-- chess.js is NOT required by chessground. We include it for the examples. -->
+    <script src="chess.min.js"></script>
+    <script>
+      function chessToDests(chess) {
+        var dests = {};
+        chess.SQUARES.forEach(function(s) {
+          var ms = chess.moves({square: s, verbose: true});
+          if (ms.length) dests[s] = ms.map(function(m) { return m.to; });
+        });
+        return dests;
+      }
+      function chessToColor(chess) {
+        return (chess.turn() == "w") ? "white" : "black";
+      }
+    </script>
+
+    <section>
+        <div class="chessground small blue cburnett" id="ground7"></div>
+        <p>Play a game on a single board</p>
+        <script>
+            (function() {
+          var ground;
+            var chess = new Chess();
+
+          var onMove = function(orig, dest) {
+            chess.move({from: orig, to: dest});
+            ground.set({
+              turnColor: chessToColor(chess),
+              movable: {
+                color: chessToColor(chess),
+                dests: chessToDests(chess)
+              }
+            });
+            console.log(ground.getFen());
+          };
+            ground = Chessground(document.getElementById('ground7'), {
+            fen: '2r3k1/pp2Qpbp/4b1p1/3p4/3n1PP1/2N4P/Pq6/R2K1B1R w -',
+            viewOnly: false,
+            turnColor: 'white',
+            animation: {
+              duration: 500
+            },
+            movable: {
+              free: false,
+              color: chessToColor(chess),
+              premove: true,
+              dests: chessToDests(chess),
+              events: {
+                after: onMove
+              }
+            },
+            drawable: {
+              enabled: true
+            }
+          });
+              window.chess = chess;
+              window.cg6 = ground;
+        })();
+
+            function LoadPgn() {
+
+            var pgn1 = ['[Event "Casual Game"]',
+                '[Site "Berlin GER"]',
+                '[Date "1852.??.??"]',
+                '[EventDate "?"]',
+                '[Round "?"]',
+                '[Result "1-0"]',
+                '[White "Adolf Anderssen"]',
+                '[Black "Jean Dufresne"]',
+                '[ECO "C52"]',
+                '[WhiteElo "?"]',
+                '[BlackElo "?"]',
+                '[PlyCount "47"]',
+                '',
+                '1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.b4 Bxb4 5.c3 Ba5 6.d4 exd4 7.O-O',
+                'd3 8.Qb3 Qf6 9.e5 Qg6 10.Re1 Nge7 11.Ba3 b5 12.Qxb5 Rb8 13.Qa4',
+                'Bb6 14.Nbd2 Bb7 15.Ne4 Qf5 16.Bxd3 Qh5 17.Nf6+ gxf6 18.exf6',
+                'Rg8 19.Rad1 Qxf3 20.Rxe7+ Nxe7 21.Qxd7+ Kxd7 22.Bf5+ Ke8',
+                '23.Bd7+ Kf8 24.Bxe7# 1-0'];
+
+            var pgn2 = ['[Event "Sample"]',
+                '[Site "some site"]',
+                '[Date "2016.08.06"]',
+                '[FEN "3k4/8/3K4/3P4/8/8/8/8 w - - 0 1"]',
+                '[SetUp "1"]',
+                '',
+                '1. Ke6 Kc7 2. d6+ Kc8 3. Ke7 Kb7 4. d7 Kb6 5. d8=Q+'
+            ];
+
+            var pgn3 = ['[Event "Charity Odds Match"]',
+                '[Site "London ENG"]',
+                '[Date "2001.04.21"]',
+                '[EventDate "2001.04.21"]',
+                '[Round "1"]',
+                '[Result "0-1"]',
+                '[White "Terence P D Chapman"]',
+                '[Black "Garry Kasparov"]',
+                '[ECO "000"]',
+                '[WhiteElo "?"]',
+                '[BlackElo "2827"]',
+                '[PlyCount "74"]',
+                '[SetUp "1"]',
+                '[FEN "rnbqkbnr/1pppppp1/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]',
+                '[ChessgamesWhiteID "58505"]',
+                '[ChessgamesBlackID "15940"]',
+                '[ChessgamesGametype "EXHIBITION"]',
+                '[ChessgamesGameID "1238126"]',
+                '',
+                '1. Nf3 d5 2. d4 c6 3. c3 Bf5 4. Bf4 Nd7 5. e3 Qb6 6. b3 Ngf6',
+                '7. Bd3 g6 8. Qc2 e6 9. Nbd2 Nh5 10. O-O Nxf4 11. exf4 Qc7',
+                '12. Ne5 Bxd3 13. Qxd3 g5 14. fxg5 Nxe5 15. dxe5 Qxe5 16. Nf3',
+                'Qf4 17. Qd4 Qxd4 18. Nxd4 Ba3 19. Ne2 Ke7 20. g3 Bb2 21. Rad1',
+                'Rxa2 22. Rd2 Rha8 23. Kg2 c5 24. h4 b5 25. h5 Kf8 26. Kf3 R8a3',
+                '27. Kg4 Rxb3 28. Nc1 Ra4+ 29. f4 Bxc1 30. Rxc1 Kg7 31. h6+ Kh7',
+                '32. Kh5 b4 33. cxb4 Rxg3 34. bxc5 Rxf4 35. Rh2 f6 36. gxf6',
+                'Rxf6 37. Kh4 Rg8 0-1'];
+            
+            var chess = new Chess();
+            var pgnsuccess = chess.load_pgn(pgn3.join('\n'), { sloppy: true });
+            if (pgnsuccess) {
+                console.log(chess.ascii());
+                window.cg6.set({
+                    fen: chess.fen()
+                });
+            }
+            else {
+                alert('unable to parse pgn')
+                // chess = new Chess('rnbqkbnr/1pppppp1/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+                window.cg6.set({
+                    fen: '3k4/8/3K4/3P4/8/8/8/8 w - - 0 1'
+                });
+            }
+        }
+
+        </script>
+    </section>
+
+  </body>
+</html>
+

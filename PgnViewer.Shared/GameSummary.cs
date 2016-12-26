@@ -19,5 +19,16 @@ namespace PgnViewer.Shared
             return $"[White={White}, Black={Black}], Pgn = {Pgn}";
         }
         
+        public string GetMovesAsJson()
+        {
+            string result = null;
+
+            if(Moves != null)
+            {
+                result = Newtonsoft.Json.JsonConvert.SerializeObject(Moves);
+            }
+
+            return result;
+        }
     }
 }

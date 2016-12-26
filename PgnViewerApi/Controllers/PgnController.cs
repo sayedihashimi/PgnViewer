@@ -14,7 +14,7 @@ namespace PgnViewerApi.Controllers
     public class PgnController : ApiController
     {
      
-        public List<MoveSummary> GetMoves([FromBody]string gamepgn)
+        private List<MoveSummary> GetMoves(string gamepgn)
         {
             PgnReader reader = new PgnReader();
             Database pgnResult = reader.ReadFromString(gamepgn);
@@ -30,8 +30,9 @@ namespace PgnViewerApi.Controllers
                 {
                     moves.Add(new MoveSummary
                     {
-                        OriginSquare = move.OriginSquare.ToString(),
-                        TargetSquare = move.TargetSquare.ToString()
+                        MoveString = move.ToString(),
+                        OriginSquare = move.OriginSquare != null ? move.OriginSquare.ToString() : string.Empty,
+                        TargetSquare = move.TargetSquare != null ? move.TargetSquare.ToString() : string.Empty
                     });
                 }
             }
@@ -67,7 +68,8 @@ namespace PgnViewerApi.Controllers
                             White = g.WhitePlayer,
                             Black = g.BlackPlayer,
                             Pgn = g.ToString(),
-                            Fenstring = fenstring
+                            Fenstring = fenstring,
+                            Moves = GetMoves(g.ToString())
                         });
                 }
 
