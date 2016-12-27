@@ -1,4 +1,10 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+   <Target Name="BeforePublish">
+    <Exec Command="bower install" />
+    <Exec Command="dotnet bundle" />
+  </Target>
+-->
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -11,6 +17,23 @@
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="$(GlobalExclude)" />
     <EmbeddedResource Include="**\*.resx" Exclude="$(GlobalExclude)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PgnViewer.Shared\ChessGame.cs">
+      <Link>Shared\ChessGame.cs</Link>
+    </Compile>
+    <Compile Include="..\PgnViewer.Shared\ChessMove.cs">
+      <Link>Shared\ChessMove.cs</Link>
+    </Compile>
+    <Compile Include="..\PgnViewer.Shared\GameSummary.cs">
+      <Link>Shared\GameSummary.cs</Link>
+    </Compile>
+    <Compile Include="..\PgnViewer.Shared\Halfmove.cs">
+      <Link>Shared\Halfmove.cs</Link>
+    </Compile>
+    <Compile Include="..\PgnViewer.Shared\MoveSummary.cs">
+      <Link>Shared\MoveSummary.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Flurl.Http">
@@ -71,16 +94,8 @@
     </DotNetCliToolReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PgnViewer.Shared\PgnViewer.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
+    <Folder Include="Shared\" />
     <Folder Include="wwwroot\pgnfiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!--
-   <Target Name="BeforePublish">
-    <Exec Command="bower install" />
-    <Exec Command="dotnet bundle" />
-  </Target>
--->
 </Project>

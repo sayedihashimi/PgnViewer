@@ -20,15 +20,5 @@ namespace PgnViewer.Shared
         {
             return $"[White={White}, Black={Black}], Pgn = {Pgn}";
         }    
-    }
-
-    //public class GameDetails
-    //{
-    //    public int Index { get; set; } = 0;
-    //    public string White { get; set; }
-    //    public string Black { get; set; }
-    //    public string Fen { get; set; }
-    //    public string Pgn { get; set; }
-    //    public List<MoveSummary> Moves { get; set; }
-    //}
+    }    
 }

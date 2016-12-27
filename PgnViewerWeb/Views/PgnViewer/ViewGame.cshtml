@@ -1,7 +1,7 @@
 ﻿@model PgnViewerWeb.ViewGameViewModel
 @using System.Collections.Generic;
 
-<article id="maingame" data-moves="@Model.Game.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn">
+<article id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn">
     <ul>
         <li>White: @Model.Game.White</li>
         <li>Black: @Model.Game.Black</li>
