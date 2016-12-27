@@ -12,8 +12,7 @@ using System.Web.Http;
 namespace PgnViewerApi.Controllers
 {
     public class PgnController : ApiController
-    {
-     
+    {     
         private List<MoveSummary> GetMoves(string gamepgn)
         {
             PgnReader reader = new PgnReader();
@@ -40,7 +39,7 @@ namespace PgnViewerApi.Controllers
             return moves;
         }
 
-        private GameMoves GetMoves(string gamepgn)
+        private GameMoves GetAllMoves(string gamepgn)
         {
             PgnReader reader = new PgnReader();
             Database pgnResult = reader.ReadFromString(gamepgn);

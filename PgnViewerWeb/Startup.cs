@@ -51,6 +51,10 @@ namespace PgnViewerWeb
 
             app.UseMvc(routes =>
             {
+                // http://localhost:20841/PgnViewer/ViewFile?filename=201612270750-4416970.pgn
+
+
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

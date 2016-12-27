@@ -73,6 +73,9 @@
   <ItemGroup>
     <ProjectReference Include="..\PgnViewer.Shared\PgnViewer.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\pgnfiles\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--
    <Target Name="BeforePublish">
