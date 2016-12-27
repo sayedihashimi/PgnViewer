@@ -1,31 +1,13 @@
 ﻿@model PgnViewerWeb.ViewGameViewModel
 @using System.Collections.Generic;
 
-<article id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn">
-    <ul>
-        <li>White: @Model.Game.White</li>
-        <li>Black: @Model.Game.Black</li>
-    </ul>
-    <table>
-        <thead>
-            <td>Move</td>
-            <td>White</td>
-            <td>Black</td>
-        </thead>
-        @foreach(var move in Model.Game.Moves){
-            <tr>
-                <td>@move.MoveNumber</td>
-                <td>@move.WhiteMove</td>
-                <td>@move.BlackMove</td>
-            </tr>
-        }
-    </table>
-</article>
-
-<script src="/chessground.js"></script>
-<!-- chess.js is NOT required by chessground. We include it for the examples. -->
-<script src="/examples/chess.min.js"></script>
-<script>
+<table>
+    <tr>
+        <td>
+            <script src="/chessground.js"></script>
+            <!-- chess.js is NOT required by chessground. We include it for the examples. -->
+            <script src="/examples/chess.min.js"></script>
+            <script>
       function chessToDests(chess) {
         var dests = {};
         chess.SQUARES.forEach(function(s) {
@@ -37,11 +19,11 @@
       function chessToColor(chess) {
         return (chess.turn() == "w") ? "white" : "black";
       }
-</script>
-<section>
-    <div class="chessground small blue cburnett" id="ground7"></div>
-    <p>Play a game on a single board</p>
-    <script>
+            </script>
+            <section>
+                <div class="chessground normal blue cburnett" id="ground7"></div>
+                <p>Play a game on a single board</p>
+                <script>
             (function() {
           var ground;
           var chess = new Chess();
@@ -77,8 +59,35 @@
           });
               window.cg6 = ground;
         })();
-    </script>
-</section>
+                </script>
+            </section>
+        </td>
+
+        <td>
+            <article id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn">
+                <ul>
+                    <li>White: @Model.Game.White</li>
+                    <li>Black: @Model.Game.Black</li>
+                </ul>
+                <table>
+                    <thead>
+                    <td>Move</td>
+                    <td>White</td>
+                    <td>Black</td>
+                    </thead>
+                    @foreach (var move in Model.Game.Moves) {
+                        <tr>
+                            <td>@move.MoveNumber</td>
+                            <td>@move.WhiteMove</td>
+                            <td>@move.BlackMove</td>
+                        </tr>
+                    }
+                </table>
+            </article>
+        </td>
+    </tr>
+</table>
+
 
 @section inhead{
     <!-- sayedha: inhead section -->

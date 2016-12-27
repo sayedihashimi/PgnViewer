@@ -122,6 +122,5 @@ namespace PgnViewerWeb.Controllers
 
             return await GetFromWebPostWithBody<ChessGame>(url, pgnString);
         }
-
     }
 }
