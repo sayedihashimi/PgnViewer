@@ -40,6 +40,34 @@ namespace PgnViewerApi.Controllers
             return moves;
         }
 
+        private GameMoves GetMoves(string gamepgn)
+        {
+            PgnReader reader = new PgnReader();
+            Database pgnResult = reader.ReadFromString(gamepgn);
+            Game game = null;
+            List<MoveSummary> moves = new List<MoveSummary>();
+            GameMoves allMoves = new GameMoves();
+
+            if (pgnResult != null || pgnResult.Games != null && pgnResult.Games.Count >= 1)
+            {
+                game = pgnResult.Games[0];
+            }
+            if (game != null)
+            {
+                int moveCount = 1;
+                foreach (var move in game.MoveText.GetMoves())
+                {
+                    allMoves.Moves.Add(new ChessMove
+                    {
+                        MoveNumber = moveCount++
+                        //WhiteMove
+                    });
+
+                }
+            }
+                    throw new NotImplementedException();
+        }
+
         [HttpPost]
         public List<GameSummary> GetGames([FromBody]string pgn)
         {
