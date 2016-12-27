@@ -53,7 +53,23 @@ namespace PgnViewerWeb
             {
                 // http://localhost:20841/PgnViewer/ViewFile?filename=201612270750-4416970.pgn
 
+                routes.MapRoute(
+                    name: "uploadfile",
+                    template: "uploadfile",
+                    defaults: new { controller = "PgnViewer", action = "Index" }
+                );
 
+                routes.MapRoute(
+                    name: "viewfile",
+                    template: "viewfile/{id}",
+                    defaults: new { controller = "PgnViewer", action = "ViewFile" }
+                );
+
+                routes.MapRoute(
+                    name: "viewgame",
+                    template: "viewgame/{id}/{index}",
+                    defaults: new {controller = "PgnViewer", action = "ViewGame"}
+                );
 
                 routes.MapRoute(
                     name: "default",

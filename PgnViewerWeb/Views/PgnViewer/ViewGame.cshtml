@@ -1,23 +1,26 @@
-﻿@model PgnViewerWeb.ViewFileViewModel
+﻿@model PgnViewerWeb.ViewGameViewModel
 @using System.Collections.Generic;
 
-<ol>
-    @{int index = 0;}
-    @foreach (var game in Model.Games) {
-        <li>
-            <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-id="@Model.Id" asp-route-index="@index">@game.White - @game.Black</a>
-        </li>
-
-        index++;
-    }
-</ol>
-
-<script type="text/javascript">
-    function showgame(identifier) {
-        pgn = $(identifier).data('pgn')
-        alert('foo: [' + pgn + ']')
-    }
-</script>
+<article id="maingame" data-moves="@Model.Game.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn">
+    <ul>
+        <li>White: @Model.Game.White</li>
+        <li>Black: @Model.Game.Black</li>
+    </ul>
+    <table>
+        <thead>
+            <td>Move</td>
+            <td>White</td>
+            <td>Black</td>
+        </thead>
+        @foreach(var move in Model.Game.Moves){
+            <tr>
+                <td>@move.MoveNumber</td>
+                <td>@move.WhiteMove</td>
+                <td>@move.BlackMove</td>
+            </tr>
+        }
+    </table>
+</article>
 
 <script src="/chessground.js"></script>
 <!-- chess.js is NOT required by chessground. We include it for the examples. -->

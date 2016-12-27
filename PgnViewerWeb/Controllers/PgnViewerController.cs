@@ -44,18 +44,29 @@ namespace PgnViewerWeb.Controllers
 
             await SaveFile(filepath, pgnfile);
 
-            return RedirectToAction("ViewFile", new { filename = filename });
+            return RedirectToAction("ViewFile", new { id = filename });
         }
 
         // using id instead of filename to simplify route url
         public async Task<IActionResult> ViewFile(string id)
         {
-            string filepath = System.IO.Path.Combine(_env.WebRootPath, $"pgnfiles\\{id}");
-            // TODO: check to see the file is less than 1 MB before reading
-            string pgncontent = System.IO.File.ReadAllText(filepath);
-            List<GameSummary> games = await GetGamesFromString(pgncontent);
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentNullException("id");
+            }
 
-            return View(games);
+            List<GameSummary> games = await GetGamesFromString(GetPgnStringFromFile(id));
+
+            return View("ViewFile", new ViewFileViewModel(id, games));
+        }
+
+        public async Task<IActionResult>ViewGame(string id, int index)
+        {
+            string pgnString = GetPgnStringFromFile(id);
+
+            ChessGame game = await GetGamefromString(pgnString, index);
+
+            return View("ViewGame", new ViewGameViewModel(id, index, game));
         }
 
         private string GetStringFrom(IFormFile file)
@@ -69,6 +80,13 @@ namespace PgnViewerWeb.Controllers
                 var sr = new StreamReader(s);
                 return sr.ReadToEnd();
             }
+        }
+
+        private string GetPgnStringFromFile(string id)
+        {
+            string filepath = System.IO.Path.Combine(_env.WebRootPath, $"pgnfiles\\{id}");
+            // TODO: check to see the file is less than 1 MB before reading
+            return System.IO.File.ReadAllText(filepath);
         }
 
         private async Task<bool> SaveFile(string filepath, IFormFile file)
@@ -90,5 +108,20 @@ namespace PgnViewerWeb.Controllers
             return resp;
         }
         
+        private async Task<T>GetFromWebPostWithBody<T>(string url,string body)
+        {
+            var resp = await (url.PostJsonAsync(body)).ReceiveJson<T>();
+
+            return resp;
+        }
+
+        private async Task<ChessGame>GetGamefromString(string pgnString, int index = 0)
+        {
+            string baseurl = @"http://localhost:20826";
+            string url = $"{baseurl}/api/games?index={index}";
+
+            return await GetFromWebPostWithBody<ChessGame>(url, pgnString);
+        }
+
     }
 }

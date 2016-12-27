@@ -2,6 +2,7 @@
 using ilf.pgn.Data;
 using Newtonsoft.Json;
 using PgnViewer.Shared;
+using PgnViewerApi.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,34 +40,6 @@ namespace PgnViewerApi.Controllers
             return moves;
         }
 
-        private GameMoves GetAllMoves(string gamepgn)
-        {
-            PgnReader reader = new PgnReader();
-            Database pgnResult = reader.ReadFromString(gamepgn);
-            Game game = null;
-            List<MoveSummary> moves = new List<MoveSummary>();
-            GameMoves allMoves = new GameMoves();
-
-            if (pgnResult != null || pgnResult.Games != null && pgnResult.Games.Count >= 1)
-            {
-                game = pgnResult.Games[0];
-            }
-            if (game != null)
-            {
-                int moveCount = 1;
-                foreach (var move in game.MoveText.GetMoves())
-                {
-                    allMoves.Moves.Add(new ChessMove
-                    {
-                        MoveNumber = moveCount++
-                        //WhiteMove
-                    });
-
-                }
-            }
-                    throw new NotImplementedException();
-        }
-
         [HttpPost]
         public List<GameSummary> GetGames([FromBody]string pgn)
         {
@@ -76,27 +49,16 @@ namespace PgnViewerApi.Controllers
                 Database pgnResult = reader.ReadFromString(pgn);
 
                 List<GameSummary> summarylist = new List<GameSummary>();
+                int index = 0;
                 foreach(var g in pgnResult.Games)
                 {
-                    var fen = (from ai in g.AdditionalInfo
-                               where string.Equals("fen", ai.Name, StringComparison.OrdinalIgnoreCase)
-                               select ai).FirstOrDefault();
-
-                    string fenstring = string.Empty;
-
-                    if (fen != null && !string.IsNullOrWhiteSpace(fen.Value))
-                    {
-                        fenstring = fen.Value;
-                    }
-
                     summarylist.Add(
                         new GameSummary
                         {
+                            Index = index++,
                             White = g.WhitePlayer,
                             Black = g.BlackPlayer,
-                            Pgn = g.ToString(),
-                            Fenstring = fenstring,
-                            Moves = GetMoves(g.ToString())
+                            Pgn = g.ToString()
                         });
                 }
 
@@ -107,6 +69,14 @@ namespace PgnViewerApi.Controllers
                 return null;
             }
         }   
+    }
 
+    public class GamesController : ApiController {
+        [HttpPost]
+        public ChessGame GetChessGame([FromUri]int index, [FromBody]string gamepgn) {
+            var chessgame = GameHelper.BuildChessGameFrom(gamepgn, index);
+
+            return chessgame;
+        }
     }
 }

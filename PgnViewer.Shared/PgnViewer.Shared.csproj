@@ -44,7 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChessGame.cs" />
+    <Compile Include="ChessMove.cs" />
     <Compile Include="GameSummary.cs" />
+    <Compile Include="Halfmove.cs" />
     <Compile Include="MoveSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
