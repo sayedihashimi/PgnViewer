@@ -1,17 +1,10 @@
 ﻿using ilf.pgn;
 using ilf.pgn.Data;
-using Newtonsoft.Json;
 using PgnViewer.Shared;
-using PgnViewerApi.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
-namespace PgnViewerApi.Controllers
-{
+namespace PgnViewerApi.Controllers {
     public class PgnController : ApiController
     {     
         private List<MoveSummary> GetMoves(string gamepgn)
@@ -69,14 +62,5 @@ namespace PgnViewerApi.Controllers
                 return null;
             }
         }   
-    }
-
-    public class GamesController : ApiController {
-        [HttpPost]
-        public ChessGame GetChessGame([FromUri]int index, [FromBody]string gamepgn) {
-            var chessgame = GameHelper.BuildChessGameFrom(gamepgn, index);
-
-            return chessgame;
-        }
     }
 }
