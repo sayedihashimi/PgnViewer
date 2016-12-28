@@ -60,13 +60,23 @@ namespace PgnViewerWeb.Controllers
             return View("ViewFile", new ViewFileViewModel(id, games));
         }
 
-        public async Task<IActionResult>ViewGame(string id, int index)
+        public async Task<IActionResult>ViewGameOld(string id, int index)
         {
             string pgnString = GetPgnStringFromFile(id);
 
             ChessGame game = await GetGamefromString(pgnString, index);
 
             return View("ViewGame", new ViewGameViewModel(id, index, game));
+        }
+
+        public async Task<IActionResult>ViewGame(string filename, int index) {        
+            string baseurl = @"http://localhost:20826";
+            string url = $"{baseurl}/api/Game?filename={filename}&index={index}";
+            var resp = await (url.GetAsync()).ReceiveJson<ChessGame>();
+
+
+
+            return View("ViewGame", new ViewGameViewModel(filename, index, resp));
         }
 
         private string GetStringFrom(IFormFile file)

@@ -93,7 +93,7 @@ namespace PgnViewerApi {
             return allgames[indexToGet];
         }
 
-        private Stream GenerateStreamFromString(string s) {
+        public Stream GenerateStreamFromString(string s) {
             MemoryStream stream = new MemoryStream();
             StreamWriter writer = new StreamWriter(stream);
             writer.Write(s);

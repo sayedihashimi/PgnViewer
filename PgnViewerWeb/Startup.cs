@@ -67,7 +67,7 @@ namespace PgnViewerWeb
 
                 routes.MapRoute(
                     name: "viewgame",
-                    template: "viewgame/{id}/{index}",
+                    template: "viewgame/{filename}/{index}",
                     defaults: new {controller = "PgnViewer", action = "ViewGame"}
                 );
 

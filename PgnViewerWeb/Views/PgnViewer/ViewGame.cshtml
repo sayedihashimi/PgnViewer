@@ -8,8 +8,6 @@
             <!-- chess.js is NOT required by chessground. We include it for the examples. -->
             <script src="/examples/chess.min.js"></script>
             <script>
-                var currentMoves = "<%= MyProperty %>"
-                
                 function chessToDests(chess) {
                     var dests = {};
                     chess.SQUARES.forEach(function(s) {
@@ -25,44 +23,7 @@
             </script>
             <section>
                 <div class="chessground normal blue cburnett" id="ground7"></div>
-                <p>Play a game on a single board</p>
-                <script>
-            (function() {
-          var ground;
-          var chess = new Chess();
-          var onMove = function(orig, dest) {
-            chess.move({from: orig, to: dest});
-            ground.set({
-              turnColor: chessToColor(chess),
-              movable: {
-                color: chessToColor(chess),
-                dests: chessToDests(chess)
-              }
-            });
-            console.log(ground.getFen());
-          };
-          ground = Chessground(document.getElementById('ground7'), {
-            viewOnly: false,
-            turnColor: 'white',
-            animation: {
-              duration: 500
-            },
-            movable: {
-              free: false,
-              color: chessToColor(chess),
-              premove: true,
-              dests: chessToDests(chess),
-              events: {
-                after: onMove
-              }
-            },
-            drawable: {
-              enabled: true
-            }
-          });
-              window.cg6 = ground;
-        })();
-                </script>
+                <p>Play a game on a single board</p>                
             </section>
         </td>
 
@@ -91,6 +52,56 @@
     </tr>
 </table>
 
+<script>
+(function() {
+    var ground;
+    var fen = document.getElementById('maingame').getAttribute('data-fen')
+    if (!fen) { fen = null; }
+
+    var chess = new Chess(fen);
+    var onMove = function(orig, dest) {
+        chess.move({from: orig, to: dest});
+        ground.set({
+            turnColor: chessToColor(chess),
+            movable: {
+                color: chessToColor(chess),
+                dests: chessToDests(chess)
+            }
+        });
+
+        console.log(ground.getFen());
+    };
+
+    ground = Chessground(document.getElementById('ground7'), {
+        viewOnly: false,
+        fen: fen,
+        turnColor: chessToColor(chess),
+        animation: {
+            duration: 500
+        },
+        movable: {
+            free: false,
+            color: chessToColor(chess),
+            dests: chessToDests(chess),
+            showDests: true,
+            events: {
+                after: onMove
+            }
+        },
+        disableContextMenu: false,
+        highlight: {
+            lastMove: true
+        },
+        premovable: {
+            enabled: false
+        },
+        drawable: {
+            enabled: true         // enable SVG circle and arrow drawing on the board
+        }
+    });
+        window.cg6 = ground;
+})();
+</script>
 
 @section inhead{
     <!-- sayedha: inhead section -->
