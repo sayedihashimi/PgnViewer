@@ -1,8 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model List<string>
+
 <form asp-action="UploadFile"
       asp-controller="PgnViewer"
       method="Post"
@@ -11,3 +8,11 @@
     <input type="file" name="pgnfile" />
     <input type="submit" value="Upload pgn" />
 </form>
+
+<ul>
+    @foreach(var item in Model){
+        <li>
+            <a asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@item">@item</a>
+        </li>
+    }
+</ul>

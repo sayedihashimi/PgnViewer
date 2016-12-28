@@ -23,9 +23,15 @@ namespace PgnViewerWeb.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View("BrowseForPgn");
+            // get the list of file names
+            string baseurl = @"http://localhost:20826";
+            string url = $"{baseurl}/api/PgnFile";
+            var response = await url.GetJsonAsync<List<string>>();
+
+
+            return View("BrowseForPgn", response);
         }
 
         [HttpPost]
@@ -36,7 +42,7 @@ namespace PgnViewerWeb.Controllers
             return View("ViewFile", games);
         }
 
-        public async Task<IActionResult> UploadFile(IFormFile pgnfile)
+        public async Task<IActionResult> UploadFileOld2(IFormFile pgnfile)
         {
             // get the file name and save it
             string filename = $"{DateTime.Now.ToString("yyyyMMddhhss-fffffff")}.pgn";
@@ -47,8 +53,48 @@ namespace PgnViewerWeb.Controllers
             return RedirectToAction("ViewFile", new { id = filename });
         }
 
+        public async Task<IActionResult>UploadFile(IFormFile pgnFile) {
+            // save the uploaded file in a temp file for now
+            string tempfile = System.IO.Path.GetTempFileName();
+            if (System.IO.File.Exists(tempfile)) {
+                System.IO.File.Delete(tempfile);
+            }
+
+            await SaveFile(tempfile, pgnFile);
+            string pgncontent = System.IO.File.ReadAllText(tempfile);
+
+            string baseurl = @"http://localhost:20826";
+            string url = $"{baseurl}/api/PgnFile";
+            var response = await url.PostJsonAsync(pgncontent);
+            // var resp = await (url.PostJsonAsync(pgncontent)).ReceiveString();
+            string filename = null;
+            if (response.IsSuccessStatusCode) {
+                // get the location header out of the
+                Uri newfileurl = response.Headers.Location;
+                
+                var queryDictionary = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(newfileurl.Query);
+                if (queryDictionary.ContainsKey("filename")) {
+                    filename = queryDictionary["filename"];
+                }
+            }
+
+            if (System.IO.File.Exists(tempfile)) {
+                System.IO.File.Delete(tempfile);
+            }
+
+            // TODO: Update this to correct item after it's been updated
+            return RedirectToAction("ViewFile", new { filename = filename });
+        }
+        public async Task<IActionResult>ViewFile(string filename) {
+            // get the game from the file
+            string baseurl = @"http://localhost:20826";
+            string url = $"{baseurl}/api/PgnFile?filename={filename}";
+            var response = await url.GetJsonAsync<List<string>>();
+
+            return View("ViewFile", new ViewFileViewModel(filename, response));
+        }
         // using id instead of filename to simplify route url
-        public async Task<IActionResult> ViewFile(string id)
+        public async Task<IActionResult> ViewFileOld(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
             {
@@ -57,7 +103,7 @@ namespace PgnViewerWeb.Controllers
 
             List<GameSummary> games = await GetGamesFromString(GetPgnStringFromFile(id));
 
-            return View("ViewFile", new ViewFileViewModel(id, games));
+            return View("ViewFile", new ViewFileViewModelOld(id, games));
         }
 
         public async Task<IActionResult>ViewGameOld(string id, int index)
@@ -73,9 +119,7 @@ namespace PgnViewerWeb.Controllers
             string baseurl = @"http://localhost:20826";
             string url = $"{baseurl}/api/Game?filename={filename}&index={index}";
             var resp = await (url.GetAsync()).ReceiveJson<ChessGame>();
-
-
-
+            
             return View("ViewGame", new ViewGameViewModel(filename, index, resp));
         }
 
@@ -108,7 +152,7 @@ namespace PgnViewerWeb.Controllers
                 return true;
             }
         }
-
+        
         private async Task<List<GameSummary>>GetGamesFromString(string pgnString)
         {
             string baseurl = @"http://localhost:20826";

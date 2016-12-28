@@ -6,16 +6,27 @@ using System.Threading.Tasks;
 
 namespace PgnViewerWeb
 {
-    public class ViewFileViewModel
-    {
+    public class ViewFileViewModel {
         public ViewFileViewModel() : this(null, null) {
 
         }
-        public ViewFileViewModel(string id, List<GameSummary> games) {
-            Id = id;
+        public ViewFileViewModel(string filename, List<string> games) {
+            Filename = filename;
             Games = games;
         }
-        public string Id { get; set; }
+        public string Filename { get; set; }
+        public List<string> Games { get; set; }
+    }
+    public class ViewFileViewModelOld
+    {
+        public ViewFileViewModelOld() : this(null, null) {
+
+        }
+        public ViewFileViewModelOld(string filename, List<GameSummary> games) {
+            Filename = filename;
+            Games = games;
+        }
+        public string Filename { get; set; }
         public List<GameSummary> Games { get; set; }
     }
 }

@@ -58,7 +58,11 @@
     var fen = document.getElementById('maingame').getAttribute('data-fen')
     if (!fen) { fen = null; }
 
-    var chess = new Chess(fen);
+    var chess = new Chess();
+    if (fen != null && fen.length > 0) {
+        chess = new Chess(fen);
+    }
+
     var onMove = function(orig, dest) {
         chess.move({from: orig, to: dest});
         ground.set({
