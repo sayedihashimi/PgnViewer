@@ -70,7 +70,13 @@ namespace PgnViewerWeb
                     template: "view/{filename}",
                     defaults: new { controller = "PgnViewer", action = "ViewFile" }
                 );
-                
+
+                routes.MapRoute(
+                    name: "viewall",
+                    template: "view",
+                    defaults: new { controller = "PgnViewer", action = "Index" }
+                );
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
