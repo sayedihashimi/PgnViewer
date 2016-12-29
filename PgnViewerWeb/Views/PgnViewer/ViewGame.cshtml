@@ -35,15 +35,17 @@
                 </ul>
                 <table>
                     <thead>
-                    <td>Move</td>
-                    <td>White</td>
-                    <td>Black</td>
+                        <tr>
+                            <td>Move</td>
+                            <td>White</td>
+                            <td>Black</td>
+                        </tr>
                     </thead>
                     @foreach (var move in Model.Game.Moves) {
                         <tr>
-                            <td>@move.MoveNumber</td>
-                            <td>@move.WhiteMove</td>
-                            <td>@move.BlackMove</td>
+                            <td>@move.Id</td>
+                            <td>@move.White</td>
+                            <td>@move.Black</td>
                         </tr>
                     }
                 </table>

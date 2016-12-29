@@ -1,12 +1,13 @@
-﻿namespace PgnViewer.Shared
+﻿using System.Runtime.Serialization;
+
+namespace PgnViewer.Shared
 {
 
     public class ChessMove
     {
-        public int MoveNumber { get; set; } = 0;
-        // public Halfmove WhiteMove { get; set; } = Halfmove.NullMove;
-        // public Halfmove BlackMove { get; set; } = Halfmove.NullMove;
-        public string WhiteMove { get; set; }
-        public string BlackMove { get; set; }
+        public int Id { get; set; } = 0;
+        public string White { get; set; }
+
+        public string Black { get; set; }
     }
 }

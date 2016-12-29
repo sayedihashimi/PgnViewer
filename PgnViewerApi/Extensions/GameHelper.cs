@@ -29,29 +29,33 @@ namespace PgnViewerApi.Extensions
                 Pgn = game.ToString()
             };
 
+            /*
+            result.Moves = new List<ChessHalfmove>();
+            if(game.MoveText != null && game.MoveText.Count() > 0) {
+                foreach(var move in game.MoveText) {
+                    int moveIndex = 1;
+                    result.Moves.Add(new ChessHalfmove(moveIndex++, move.ToString()));
+                }
+            }
+            */
+
             bool firstMove = true;
             int totalNumHalfMoves = game.MoveText.GetMoves().Count();
             int currentMoveNumber = 1;
             var gameMoves = game.MoveText.GetMoves().ToList();
 
             for (int currentHalfMoveIndex = 0; currentHalfMoveIndex < gameMoves.Count(); currentHalfMoveIndex++) {
-                // Halfmove whiteMove = Halfmove.NullMove;
-                // Halfmove blackMove = Halfmove.NullMove;
                 string whiteMove = null;
                 string blackMove = null;
 
                 if (firstMove && !isWhiteMove) {
                     // create a move with a null move for white
                     blackMove = gameMoves[currentHalfMoveIndex].ToString();
-                    // blackMove = new Halfmove(gameMoves[currentHalfMoveIndex].ToString());
-
                 }
                 else {
                     whiteMove = gameMoves[currentHalfMoveIndex].ToString();
-                    // whiteMove = new Halfmove(gameMoves[currentHalfMoveIndex].ToString());
                     if (gameMoves.Count() > (currentHalfMoveIndex + 1)) {
                         blackMove = gameMoves[currentHalfMoveIndex + 1].ToString();
-                        // blackMove = new Halfmove(gameMoves[currentHalfMoveIndex + 1].ToString());
                     }
 
                     // increment halfMoveCounter an extra time for the blackMove
@@ -59,9 +63,9 @@ namespace PgnViewerApi.Extensions
                 }
 
                 result.Moves.Add(new ChessMove {
-                    MoveNumber = currentMoveNumber++,
-                    WhiteMove = whiteMove,
-                    BlackMove = blackMove
+                    Id = currentMoveNumber++,
+                    White = whiteMove,
+                    Black = blackMove
                 });
             }
             

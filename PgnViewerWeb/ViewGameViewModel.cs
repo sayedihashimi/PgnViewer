@@ -23,7 +23,7 @@ namespace PgnViewerWeb {
         public string MovesAsJson { get; set; }
 
         private void InitMovesAsJson() {
-            if(Game != null && Game.Moves != null) {
+            if (Game != null && Game.Moves != null) {
                 MovesAsJson = JsonConvert.SerializeObject(Game.Moves);
             }
         }
