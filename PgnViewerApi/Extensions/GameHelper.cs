@@ -35,18 +35,23 @@ namespace PgnViewerApi.Extensions
             var gameMoves = game.MoveText.GetMoves().ToList();
 
             for (int currentHalfMoveIndex = 0; currentHalfMoveIndex < gameMoves.Count(); currentHalfMoveIndex++) {
-                Halfmove whiteMove = Halfmove.NullMove;
-                Halfmove blackMove = Halfmove.NullMove;
+                // Halfmove whiteMove = Halfmove.NullMove;
+                // Halfmove blackMove = Halfmove.NullMove;
+                string whiteMove = null;
+                string blackMove = null;
 
                 if (firstMove && !isWhiteMove) {
                     // create a move with a null move for white
-                    blackMove = new Halfmove(gameMoves[currentHalfMoveIndex].ToString());
+                    blackMove = gameMoves[currentHalfMoveIndex].ToString();
+                    // blackMove = new Halfmove(gameMoves[currentHalfMoveIndex].ToString());
 
                 }
                 else {
-                    whiteMove = new Halfmove(gameMoves[currentHalfMoveIndex].ToString());
-                    if(gameMoves.Count() > (currentHalfMoveIndex + 1)) {
-                        blackMove = new Halfmove(gameMoves[currentHalfMoveIndex + 1].ToString());
+                    whiteMove = gameMoves[currentHalfMoveIndex].ToString();
+                    // whiteMove = new Halfmove(gameMoves[currentHalfMoveIndex].ToString());
+                    if (gameMoves.Count() > (currentHalfMoveIndex + 1)) {
+                        blackMove = gameMoves[currentHalfMoveIndex + 1].ToString();
+                        // blackMove = new Halfmove(gameMoves[currentHalfMoveIndex + 1].ToString());
                     }
 
                     // increment halfMoveCounter an extra time for the blackMove
@@ -58,7 +63,6 @@ namespace PgnViewerApi.Extensions
                     WhiteMove = whiteMove,
                     BlackMove = blackMove
                 });
-
             }
             
             return result;
