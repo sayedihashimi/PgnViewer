@@ -12,13 +12,20 @@ function chessToColor(chess) {
     return (chess.turn() == "w") ? "white" : "black";
 }
 
+function MakeNextMove() {
+
+}
+
 function MoveTo(caller, id, playerColor) {
     // alert('moveto:[' + id + '] color:[' + playerColor + ']')
     // go back to the beginning of the game and play moves until we get to the right move
+
     while (($uresult = window.chess.undo()) != null) {
         console.log('undo move called');
     }
+
     window.cg6.set({ fen: chess.fen() });
+
     if (id <= 0) {
         return;
     }
