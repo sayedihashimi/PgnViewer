@@ -21,53 +21,54 @@ namespace PgnViewerApi.Extensions
             if(game.BoardSetup != null) {
                 isWhiteMove = game.BoardSetup.IsWhiteMove;
             }
-            
+
             var result = new ChessGame {
                 White = game.WhitePlayer,
                 Black = game.BlackPlayer,
                 Fen = GetFromAdditionalInfo(game, "Fen"),
-                Pgn = game.ToString()
+                Pgn = game.ToString(),
+                FirstPlayer = isWhiteMove ? "white" : "black"
             };
 
-            /*
+
             result.Moves = new List<ChessHalfmove>();
-            if(game.MoveText != null && game.MoveText.Count() > 0) {
-                foreach(var move in game.MoveText) {
-                    int moveIndex = 1;
+            if (game.MoveText != null && game.MoveText.GetMoves().Count() > 0) {
+                int moveIndex = 1;
+                foreach (var move in game.MoveText.GetMoves()) {                    
                     result.Moves.Add(new ChessHalfmove(moveIndex++, move.ToString()));
                 }
             }
-            */
+            
 
-            bool firstMove = true;
-            int totalNumHalfMoves = game.MoveText.GetMoves().Count();
-            int currentMoveNumber = 1;
-            var gameMoves = game.MoveText.GetMoves().ToList();
+            //bool firstMove = true;
+            //int totalNumHalfMoves = game.MoveText.GetMoves().Count();
+            //int currentMoveNumber = 1;
+            //var gameMoves = game.MoveText.GetMoves().ToList();
 
-            for (int currentHalfMoveIndex = 0; currentHalfMoveIndex < gameMoves.Count(); currentHalfMoveIndex++) {
-                string whiteMove = null;
-                string blackMove = null;
+            //for (int currentHalfMoveIndex = 0; currentHalfMoveIndex < gameMoves.Count(); currentHalfMoveIndex++) {
+            //    string whiteMove = null;
+            //    string blackMove = null;
 
-                if (firstMove && !isWhiteMove) {
-                    // create a move with a null move for white
-                    blackMove = gameMoves[currentHalfMoveIndex].ToString();
-                }
-                else {
-                    whiteMove = gameMoves[currentHalfMoveIndex].ToString();
-                    if (gameMoves.Count() > (currentHalfMoveIndex + 1)) {
-                        blackMove = gameMoves[currentHalfMoveIndex + 1].ToString();
-                    }
+            //    if (firstMove && !isWhiteMove) {
+            //        // create a move with a null move for white
+            //        blackMove = gameMoves[currentHalfMoveIndex].ToString();
+            //    }
+            //    else {
+            //        whiteMove = gameMoves[currentHalfMoveIndex].ToString();
+            //        if (gameMoves.Count() > (currentHalfMoveIndex + 1)) {
+            //            blackMove = gameMoves[currentHalfMoveIndex + 1].ToString();
+            //        }
 
-                    // increment halfMoveCounter an extra time for the blackMove
-                    currentHalfMoveIndex++;
-                }
+            //        // increment halfMoveCounter an extra time for the blackMove
+            //        currentHalfMoveIndex++;
+            //    }
 
-                result.Moves.Add(new ChessMove {
-                    Id = currentMoveNumber++,
-                    White = whiteMove,
-                    Black = blackMove
-                });
-            }
+            //    result.Moves.Add(new ChessMove {
+            //        Id = currentMoveNumber++,
+            //        White = whiteMove,
+            //        Black = blackMove
+            //    });
+            //}
             
             return result;
         }

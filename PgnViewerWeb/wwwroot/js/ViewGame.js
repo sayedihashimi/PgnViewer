@@ -1,3 +1,8 @@
+var currentMove = {
+    moveId: 0
+}
+
+var movesPlayed = [];
 
 function chessToDests(chess) {
     var dests = {};
@@ -12,12 +17,85 @@ function chessToColor(chess) {
     return (chess.turn() == "w") ? "white" : "black";
 }
 
-function MakeNextMove() {
+function MoveTo(caller, moveId) {
+    // alert('moveto called with: [' + moveId + ' ]');
 
+    if (moveId == currentMove.moveId) {
+        return;
+    }
+
+    if (moveId > currentMove.moveId) {
+        for (var id = currentMove.moveId; id < moveId; id++) {
+            // movesToMake.push(window.moves[id].Move);
+            var moveResult = window.chess.move(window.moves[id].Move, { verbose: true });
+            if (moveResult) {
+                window.cg6.move(moveResult.from, moveResult.to);
+                MoverookIfCastle(moveResult);
+            }
+        }
+    }
+
+    if (moveId < currentMove.moveId) {
+        for (var id = currentMove.moveId; id > moveId; id--) {
+            var undoResult = window.chess.undo();
+            if (undoResult) {
+                window.cg6.move(undoResult.to, undoResult.from);
+                UndorookIfCastle(undoResult);
+            }
+        }
+    }
+
+    currentMove.moveId = moveId;
 }
 
-function MoveTo(caller, id, playerColor) {
-    // alert('moveto:[' + id + '] color:[' + playerColor + ']')
+function MoverookIfCastle(moveResult) {
+    if (moveResult && moveResult.flags) {
+        if (moveResult.flags.includes(window.chess.FLAGS.KSIDE_CASTLE)) {
+            if (moveResult.color === window.chess.WHITE) {
+                // move the white kingside rook
+                window.cg6.move('h1','f1');
+            }
+            else {                
+                // move the black kingside rook
+                window.cg6.move('h8', 'f8');
+            }
+        }
+        else if (moveResult.flags.includes(window.chess.FLAGS.QSIDE_CASTLE)) {
+            if (moveResult.color === window.chess.WHITE) {
+                window.cg6.move('a1', 'd1');
+            }
+            else {
+                window.cg6.move('a8', 'd8');
+            }
+        }
+    }
+}
+
+function UndorookIfCastle(undoResult) {
+    if (undoResult && undoResult.flags) {
+        if (undoResult.flags.includes(window.chess.FLAGS.KSIDE_CASTLE)) {
+            if (undoResult.color === window.chess.WHITE) {
+                // move the white kingside rook
+                window.cg6.move('f1', 'h1');
+            }
+            else {
+                // move the black kingside rook
+                window.cg6.move('f8', 'h8');
+            }
+        }
+        else if (undoResult.flags.includes(window.chess.FLAGS.QSIDE_CASTLE)) {
+            if (undoResult.color === window.chess.WHITE) {
+                window.cg6.move('d1', 'a1');
+            }
+            else {
+                window.cg6.move('d8', 'a8');
+            }
+        }
+    }
+}
+
+function MoveToOld(caller, id, playerColor) {
+    alert('movetoOLD:[' + id + '] color:[' + playerColor + ']')
     // go back to the beginning of the game and play moves until we get to the right move
 
     while (($uresult = window.chess.undo()) != null) {
@@ -89,35 +167,21 @@ function MoveTo(caller, id, playerColor) {
 }
 
 function MoveNext() {
-    if (currentColor === 'w') {
-        currentColor = 'b';
-    }
-    else {
-        currentMove++;
-        currentColor = 'w';
+    var nextMoveNum = currentMove.moveId + 1;
+    if (nextMoveNum >= window.moves.length - 1) {
+        nextMoveNum = window.moves.length - 1;
     }
 
-    if (currentMove > window.moves.length || currentMove < 1) {
-        currentMove = 1;
-        currentColor = 'w'
-    }
-
-    MoveTo(null, currentMove, currentColor);
+    MoveTo(null, nextMoveNum);
 }
+
 function MovePrevious() {
-    if (currentColor === 'b') {
-        currentColor = 'w';
-    }
-    else {
-        currentMove--;
-        currentColor = 'b';
+    var nextMoveNum = currentMove.moveId - 1;
+    if (nextMoveNum < 0) {
+        nextMoveNum = 0;
     }
 
-    if (currentMove > window.moves.length || currentMove < 1) {
-        currentMove = 0;
-        currentColor = 'b'
-    }
-    MoveTo(null, currentMove, currentColor);
+    MoveTo(null, nextMoveNum);
 }
 
 (function () {
@@ -133,15 +197,6 @@ function MovePrevious() {
     };
 
 })();
-
-var currentMove = {
-    moveId: 1,
-    playerColor: 'w'
-}
-
-var movesPlayed = [];
-var currentMove = 0;
-var currentColor = 'b';
 
 (function () {
     var ground;
@@ -206,11 +261,6 @@ var currentColor = 'b';
     window.chess = chess;
     window.cg6 = ground;
 
-    window.moves = JSON.parse(document.getElementById('maingame').getAttribute('data-moves'));
-
-    currentMove = {
-        moveId: 1,
-        playerColor: window.chess.turn()
-    }
+    window.moves = JSON.parse(document.getElementById('maingame').getAttribute('data-moves'));    
 })();
 

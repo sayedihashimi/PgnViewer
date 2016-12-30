@@ -13,18 +13,19 @@ namespace PgnViewer.Shared
         public string White { get; set; }
         public string Black { get; set; }
         public string Fen { get; set; }
+        public string FirstPlayer { get; set; } = "white";
         public string Pgn { get; set; }
-        public List<ChessMove> Moves { get; set; } = new List<ChessMove>();
-        // public List<ChessHalfmove> Moves { get; set; }
+        // public List<ChessMove> Moves { get; set; } = new List<ChessMove>();
+        public List<ChessHalfmove> Moves { get; set; } = new List<ChessHalfmove>();
     }
     public class ChessHalfmove {
         public ChessHalfmove() : this(-1, null) {
         }
         public ChessHalfmove(int halfmoveId, string move) {
-            HalfmoveId = halfmoveId;
+            Id = halfmoveId;
             Move = move;
         }
-        public int HalfmoveId { get; set; }
+        public int Id { get; set; }
         public string Move { get; set; }        
     }
 }
