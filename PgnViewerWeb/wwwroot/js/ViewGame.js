@@ -46,6 +46,19 @@ function MoveTo(caller, moveId) {
         }
     }
 
+    window.cg6.set({
+        turnColor: chessToColor(chess),
+        movable: {
+            color: chessToColor(chess),
+            dests: chessToDests(chess)
+        }
+    });
+
+    $("#moveList>li>span").removeClass('activeMove');
+    $('#move' + moveId).addClass('activeMove');
+
+    var isVisible = 
+
     currentMove.moveId = moveId;
 }
 
@@ -206,8 +219,8 @@ function MoveToOld(caller, id, playerColor) {
 
 function MoveNext() {
     var nextMoveNum = currentMove.moveId + 1;
-    if (nextMoveNum >= window.moves.length - 1) {
-        nextMoveNum = window.moves.length - 1;
+    if (nextMoveNum >= window.moves.length) {
+        nextMoveNum = window.moves.length;
     }
 
     MoveTo(null, nextMoveNum);

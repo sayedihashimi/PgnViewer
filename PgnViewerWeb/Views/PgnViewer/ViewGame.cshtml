@@ -3,6 +3,7 @@
 @{
     var currentMovePlayer = Model.Game.FirstPlayer;
     var currentMoveIndex = 1;
+    string currentId = null;
 }
 <table>
     <tr>
@@ -18,12 +19,7 @@
 
         <td>
             <article id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn" data-firstplayer="@Model.Game.FirstPlayer">
-                <ul>
-                    <li>White: @Model.Game.White</li>
-                    <li>Black: @Model.Game.Black</li>
-                </ul>
-
-                <ul class="moveList" style="height:100%;overflow-y:scroll">                    
+                <ul id="moveList" class="moveList" style="height:100%;overflow-y:scroll">                    
                     @for (var mindex = 0; mindex < Model.Game.Moves.Count(); mindex++) {
                         @if (mindex == 0 && string.Equals("black", Model.Game.FirstPlayer, StringComparison.OrdinalIgnoreCase)) {
 WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
@@ -35,11 +31,11 @@ WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
                             @*<li class="moveItem">*@
                         WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
 <span class="moveId">@currentMoveIndex</span>
-<span class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
+<span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
                         }
 
                         @if (string.Equals("black", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
-<span class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
+<span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
 WriteLiteral(@"</li>");
                             currentMoveIndex++;
                         }
