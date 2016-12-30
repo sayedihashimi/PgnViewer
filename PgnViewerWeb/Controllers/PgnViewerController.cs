@@ -22,12 +22,21 @@ namespace PgnViewerWeb.Controllers
             _env = env;
         }
 
+        private string GetApiBaseAddress() {
+            // if(_env.IsDevelopment()
+            string apiAddress = System.Environment.GetEnvironmentVariable("ApiBaseAddress");
+            if (string.IsNullOrWhiteSpace(apiAddress)) {
+                apiAddress = @"http://localhost:20826";
+            }
+
+            return apiAddress;
+        }
+
         // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
             // get the list of file names
-            string baseurl = @"http://localhost:20826";
-            string url = $"{baseurl}/api/PgnFile";
+            string url = $"{GetApiBaseAddress()}/api/PgnFile";
             var response = await url.GetJsonAsync<List<string>>();
 
 
@@ -63,8 +72,7 @@ namespace PgnViewerWeb.Controllers
             await SaveFile(tempfile, pgnFile);
             string pgncontent = System.IO.File.ReadAllText(tempfile);
 
-            string baseurl = @"http://localhost:20826";
-            string url = $"{baseurl}/api/PgnFile";
+            string url = $"{GetApiBaseAddress()}/api/PgnFile";
             var response = await url.PostJsonAsync(pgncontent);
             // var resp = await (url.PostJsonAsync(pgncontent)).ReceiveString();
             string filename = null;
@@ -87,8 +95,7 @@ namespace PgnViewerWeb.Controllers
         }
         public async Task<IActionResult>ViewFile(string filename) {
             // get the game from the file
-            string baseurl = @"http://localhost:20826";
-            string url = $"{baseurl}/api/PgnFile?filename={filename}";
+            string url = $"{GetApiBaseAddress()}/api/PgnFile?filename={filename}";
             var response = await url.GetJsonAsync<List<string>>();
 
             return View("ViewFile", new ViewFileViewModel(filename, response));
@@ -115,9 +122,8 @@ namespace PgnViewerWeb.Controllers
             return View("ViewGame", new ViewGameViewModel(id, index, game));
         }
 
-        public async Task<IActionResult>ViewGame(string filename, int index) {        
-            string baseurl = @"http://localhost:20826";
-            string url = $"{baseurl}/api/Game?filename={filename}&index={index}";
+        public async Task<IActionResult>ViewGame(string filename, int index) {
+            string url = $"{GetApiBaseAddress()}/api/Game?filename={filename}&index={index}";
             var resp = await (url.GetAsync()).ReceiveJson<ChessGame>();
             
             return View("ViewGame", new ViewGameViewModel(filename, index, resp));
@@ -155,8 +161,7 @@ namespace PgnViewerWeb.Controllers
         
         private async Task<List<GameSummary>>GetGamesFromString(string pgnString)
         {
-            string baseurl = @"http://localhost:20826";
-            string url = string.Format("{0}/api/pgn/GetGames", baseurl);
+            string url = string.Format("{0}/api/pgn/GetGames", GetApiBaseAddress());
             var resp = await (url.PostJsonAsync(pgnString)).ReceiveJson<List<GameSummary>>();
 
             return resp;
@@ -171,8 +176,7 @@ namespace PgnViewerWeb.Controllers
 
         private async Task<ChessGame>GetGamefromString(string pgnString, int index = 0)
         {
-            string baseurl = @"http://localhost:20826";
-            string url = $"{baseurl}/api/games?index={index}";
+            string url = $"{GetApiBaseAddress()}/api/games?index={index}";
 
             return await GetFromWebPostWithBody<ChessGame>(url, pgnString);
         }
