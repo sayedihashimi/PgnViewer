@@ -36,10 +36,10 @@
 
                 <ul style="background-color:gainsboro;height:480px;overflow:hidden;overflow-y:scroll">
                     @foreach (var move in Model.Game.Moves) {
-                        <li style="list-style-type: none;font-family:sans-serif;font-size:14pt;color:black">
-                            <span style="float: left;min-width:15px;height:100%;background-color:gainsboro">@move.Id</span>
-                            <span style="float: left;min-width:50px;height:100%;background-color:white" onclick="MoveTo(@move.Id,'w')">@move.White</span>
-                            <span style="float: left;min-width:50px;height:100%;background-color:white" onclick="MoveTo(@move.Id,'b')">@move.Black</span>
+                        <li style="list-style-type: none;font-family:sans-serif;font-size:14pt;color:black;text-align:left">
+                            <span style="float: left;width:25px;height:100%;background-color:gainsboro">@move.Id</span>
+                            <span style="padding-left:5px;float: left;width:75px;height:100%;background-color:white" onclick="MoveTo(this,@move.Id,'w')">@move.White</span>
+                            <span style="float: left;width:75px;height:100%;background-color:white" onclick="MoveTo(this,@move.Id,'b')">@move.Black</span>
                         </li>
                     }
                 </ul>
@@ -112,20 +112,40 @@
         window.cg6 = ground;
     })();
 
+    (function () {
+        document.onkeydown = function (e) {
+            if (e.keyCode === 37) {
+                // arrow left
+                MovePrevious();
+            }
+            else if (e.keyCode === 39) {
+                // arrow right
+                MoveNext();
+            }
+        };
+        
+    })();
+
     var moves = JSON.parse(document.getElementById('maingame').getAttribute('data-moves'))
     var currentMove = {
-        moveId : -1,
+        moveId : 1,
         playerColor : chess.turn()
     }
 
     var movesPlayed = [];
-    function MoveTo(id, playerColor) {
+    var currentMove = 0;
+    var currentColor = 'b';
+    function MoveTo(caller,id, playerColor) {
         // alert('moveto:[' + id + '] color:[' + playerColor + ']')
         // go back to the beginning of the game and play moves until we get to the right move
         while (($uresult = window.chess.undo()) != null) {
             console.log('undo move called');
         }
-        window.cg6.set({ fen: chess.fen()});
+        window.cg6.set({ fen: chess.fen() });
+        if (id <= 0) {
+            return;
+        }
+
         // get the moves
         for (var i = 0; i < moves.length; i++){
             var cMove = moves[i];
@@ -145,6 +165,8 @@
             // play the black move unless this is the last move and move selected was for white
 
             if (id === (i + 1) && playerColor === 'w') {
+                currentMove = id;
+                currentColor = 'w';
                 break;
             }
 
@@ -158,9 +180,43 @@
 
             // stop the loop to prevent extra moves played
             if (id === (i + 1)) {
+                currentMove = id;
+                currentColor = 'b';
                 break;
             }
         }
+    }
+   
+    function MoveNext() {
+        if (currentColor === 'w') {
+            currentColor = 'b';
+        }
+        else {
+            currentMove++;
+            currentColor = 'w';
+        }
+
+        if (currentMove > moves.length || currentMove < 1) {
+            currentMove = 1;
+            currentColor = 'w'
+        }
+
+        MoveTo(null, currentMove, currentColor);
+    }
+    function MovePrevious() {
+        if (currentColor === 'b') {
+            currentColor = 'w';
+        }
+        else {
+            currentMove--;
+            currentColor = 'b';
+        }
+
+        if (currentMove > moves.length || currentMove < 1) {
+            currentMove = 0;
+            currentColor = 'b'
+        }
+        MoveTo(null, currentMove, currentColor);
     }
 </script>
 
