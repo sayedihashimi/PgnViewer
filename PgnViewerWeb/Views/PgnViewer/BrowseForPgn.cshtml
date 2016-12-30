@@ -1,14 +1,5 @@
 ﻿@model List<string>
 
-<form asp-action="UploadFile"
-      asp-controller="PgnViewer"
-      method="Post"
-      enctype="multipart/form-data"
-      >
-    <input type="file" name="pgnfile" />
-    <input type="submit" value="Upload pgn" />
-</form>
-
 <ul>
     @foreach(var item in Model){
         <li>
@@ -16,3 +7,11 @@
         </li>
     }
 </ul>
+
+<form asp-action="UploadFile"
+      asp-controller="PgnViewer"
+      method="Post"
+      enctype="multipart/form-data">
+    <input type="file" name="pgnfile" />
+    <input type="submit" value="Upload pgn" />
+</form>

@@ -79,7 +79,7 @@ namespace PgnViewerWeb
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=PgnViewer}/{action=Index}/{id?}");
             });
         }
     }
