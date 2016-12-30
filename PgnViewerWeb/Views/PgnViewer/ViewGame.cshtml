@@ -167,6 +167,14 @@
             if (id === (i + 1) && playerColor === 'w') {
                 currentMove = id;
                 currentColor = 'w';
+
+                ground.set({
+                    turnColor: chessToColor(chess),
+                    movable: {
+                        color: chessToColor(chess),
+                        dests: chessToDests(chess)
+                    }
+                });
                 break;
             }
 
@@ -182,6 +190,14 @@
             if (id === (i + 1)) {
                 currentMove = id;
                 currentColor = 'b';
+
+                ground.set({
+                    turnColor: chessToColor(chess),
+                    movable: {
+                        color: chessToColor(chess),
+                        dests: chessToDests(chess)
+                    }
+                });
                 break;
             }
         }
