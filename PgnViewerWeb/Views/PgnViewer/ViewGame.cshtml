@@ -33,25 +33,19 @@
                     <li>White: @Model.Game.White</li>
                     <li>Black: @Model.Game.Black</li>
                 </ul>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Move</td>
-                            <td>White</td>
-                            <td>Black</td>
-                        </tr>
-                    </thead>
+
+                <ul style="background-color:gainsboro;height:480px;overflow:hidden;overflow-y:scroll">
                     @foreach (var move in Model.Game.Moves) {
-                        <tr data-moveid="@move.Id">
-                            <td>@move.Id</td>
-                            <td onclick="MoveTo(@move.Id,'w')">@move.White</td>
-                            <td onclick="MoveTo(@move.Id,'b')">@move.Black</td>
-                        </tr>
+                        <li style="list-style-type: none;font-family:sans-serif;font-size:14pt;color:black">
+                            <span style="float: left;min-width:15px;height:100%;background-color:gainsboro">@move.Id</span>
+                            <span style="float: left;min-width:50px;height:100%;background-color:white" onclick="MoveTo(@move.Id,'w')">@move.White</span>
+                            <span style="float: left;min-width:50px;height:100%;background-color:white" onclick="MoveTo(@move.Id,'b')">@move.Black</span>
+                        </li>
                     }
-                </table>
-            </article>
-        </td>
-    </tr>
+                </ul>
+                </article>
+                </td>
+            </tr>
 </table>
 
 <script>
