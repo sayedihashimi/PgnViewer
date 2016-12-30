@@ -41,6 +41,7 @@ function MoveTo(caller, moveId) {
             if (undoResult) {
                 window.cg6.move(undoResult.to, undoResult.from);
                 UndorookIfCastle(undoResult);
+                UndoPlacePieceIfCapture(undoResult);
             }
         }
     }
@@ -90,6 +91,43 @@ function UndorookIfCastle(undoResult) {
             else {
                 window.cg6.move('d8', 'a8');
             }
+        }
+    }
+}
+
+function UndoPlacePieceIfCapture(undoResult) {
+    if (undoResult && undoResult.captured && undoResult.captured.length > 0) {
+        var pieceToAdd = null;
+        var color = 'white';
+        if (undoResult.color === 'w') {
+            color = 'black';
+        }
+
+        switch (undoResult.captured) {
+            case window.chess.PAWN:
+                pieceToAdd = 'pawn';
+                break;
+            case window.chess.ROOK:
+                pieceToAdd = 'rook';
+                break;
+            case window.chess.BISHOP:
+                pieceToAdd = 'bishop';
+                break;
+            case window.chess.KNIGHT:
+                pieceToAdd = 'knight';
+                break;
+            case window.chess.QUEEN:
+                pieceToAdd = 'queen';
+                break;
+            case window.chess.KING:
+                pieceToAdd = 'king';
+                break;
+        }
+
+        if (pieceToAdd) {
+            var pieceMap = {}
+            pieceMap[undoResult.to] = { color: color, role: pieceToAdd};
+            window.cg6.setPieces(pieceMap);
         }
     }
 }
