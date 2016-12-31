@@ -31,6 +31,7 @@ function MoveTo(caller, moveId) {
             if (moveResult) {
                 window.cg6.move(moveResult.from, moveResult.to);
                 MoverookIfCastle(moveResult);
+                HandlePawnPromotion(moveResult);
             }
         }
     }
@@ -42,6 +43,7 @@ function MoveTo(caller, moveId) {
                 window.cg6.move(undoResult.to, undoResult.from);
                 UndorookIfCastle(undoResult);
                 UndoPlacePieceIfCapture(undoResult);
+                HandleUndoPawnPromotion(undoResult);
             }
         }
     }
@@ -82,6 +84,53 @@ function MoverookIfCastle(moveResult) {
                 window.cg6.move('a8', 'd8');
             }
         }
+    }
+}
+
+function HandlePawnPromotion(moveResult) {
+    if (moveResult && moveResult.flags && moveResult.flags.includes(window.chess.FLAGS.PROMOTION)) {
+        // place the new piece
+        var color = moveResult.color === 'w' ? 'white' : 'black';
+
+        var pieceToAdd = null;
+        switch (moveResult.promotion) {
+            case window.chess.PAWN:
+                pieceToAdd = 'pawn';
+                break;
+            case window.chess.ROOK:
+                pieceToAdd = 'rook';
+                break;
+            case window.chess.BISHOP:
+                pieceToAdd = 'bishop';
+                break;
+            case window.chess.KNIGHT:
+                pieceToAdd = 'knight';
+                break;
+            case window.chess.QUEEN:
+                pieceToAdd = 'queen';
+                break;
+            case window.chess.KING:
+                pieceToAdd = 'king';
+                break;
+        }
+
+        if (pieceToAdd) {
+            var pieceMap = {}
+            pieceMap[moveResult.to] = { color: color, role: pieceToAdd };
+            window.cg6.setPieces(pieceMap);
+        }
+    }
+}
+
+function HandleUndoPawnPromotion(moveResult) {
+    if (moveResult && moveResult.flags && moveResult.flags.includes(window.chess.FLAGS.PROMOTION)) {
+        var color = moveResult.color === 'w' ? 'white' : 'black';
+        var pieceMap = {}
+        // clear out the queening square
+        pieceMap[moveResult.to] = null;
+        // place a pawn in the from square
+        pieceMap[moveResult.from] = { role: 'pawn', color: color };
+        window.cg6.setPieces(pieceMap);
     }
 }
 
