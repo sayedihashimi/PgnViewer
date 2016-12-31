@@ -5,43 +5,43 @@
     var currentMoveIndex = 1;
     string currentId = null;
 }
+
+
+
+
+
 <table>
     <tr>
-
-        <td>            
-            <script>
-            </script>
+        <td>
             <section>
                 <div class="chessground normal blue cburnett" id="ground7"></div>
-                <p>TODO: insert game info here</p>
             </section>
         </td>
-
         <td>
-            <article id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn" data-firstplayer="@Model.Game.FirstPlayer">
-                <ul id="moveList" class="moveList" style="height:100%;overflow-y:scroll">                    
+            <span id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn" data-firstplayer="@Model.Game.FirstPlayer">
+                <ul id="moveList" class="moveList" style="overflow-y:scroll">
                     @for (var mindex = 0; mindex < Model.Game.Moves.Count(); mindex++) {
                         @if (mindex == 0 && string.Equals("black", Model.Game.FirstPlayer, StringComparison.OrdinalIgnoreCase)) {
-WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
-<span class="moveId">1</span>
-<span class="move">..</span>
+                    WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
+                            <span class="moveId">1</span>
+                            <span class="move">..</span>
                         }
 
                         @if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
                             @*<li class="moveItem">*@
                         WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
-<span class="moveId">@currentMoveIndex</span>
-<span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
+                        <span class="moveId">@currentMoveIndex</span>
+                        <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
                         }
 
                         @if (string.Equals("black", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
-<span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
-WriteLiteral(@"</li>");
+                            <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
+                            WriteLiteral(@"</li>");
                             currentMoveIndex++;
                         }
 
                         @* update currentMovePlayer *@
-                        if(string.Equals("white",currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
+                        if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
                             currentMovePlayer = "black";
                         }
                         else {
@@ -49,7 +49,18 @@ WriteLiteral(@"</li>");
                         }
                     }
                 </ul>
-            </article>
+            </span>
+        </td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td>
+
+        </td>
+
+        <td>
         </td>
 
     </tr>
