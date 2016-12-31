@@ -312,6 +312,21 @@ function MovePrevious() {
     window.chess = chess;
     window.cg6 = ground;
 
-    window.moves = JSON.parse(document.getElementById('maingame').getAttribute('data-moves'));    
+    window.moves = JSON.parse(document.getElementById('maingame').getAttribute('data-moves'));
 })();
 
+
+/*
+.chessground.tiny {
+  width: 225px;
+  height: 225px;
+}
+.chessground.small {
+  width: 300px;
+  height: 300px;
+}
+.chessground.normal {
+  width: 512px;
+  height: 512px;
+}
+*/

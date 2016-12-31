@@ -42,3 +42,24 @@ section p {
 .cg-board-wrap svg * {
   transition: 0.35s;
 }
+
+/*ground7*/
+/*@media all and (min-width: 550px) {
+    #ground7 {
+        width: 512px;
+        height: 512px;
+    }
+}
+@media all and (min-width: 350px) and (max-width: 550px) {
+    #ground7 {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media all and (min-width: 1px) and (max-width: 350px) {
+    #ground7 {
+        width: 225px;
+        height: 225px;
+    }
+}*/
