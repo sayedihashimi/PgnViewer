@@ -16,17 +16,5 @@ namespace PgnViewerWeb
         }
         public string Filename { get; set; }
         public List<string> Games { get; set; }
-    }
-    public class ViewFileViewModelOld
-    {
-        public ViewFileViewModelOld() : this(null, null) {
-
-        }
-        public ViewFileViewModelOld(string filename, List<GameSummary> games) {
-            Filename = filename;
-            Games = games;
-        }
-        public string Filename { get; set; }
-        public List<GameSummary> Games { get; set; }
-    }
+    }    
 }

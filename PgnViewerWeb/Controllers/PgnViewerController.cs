@@ -43,25 +43,6 @@ namespace PgnViewerWeb.Controllers
             return View("BrowseForPgn", response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UploadFileOld(IFormFile pgnfile)
-        {
-            string pgnString = GetStringFrom(pgnfile);
-            List<GameSummary> games = await GetGamesFromString(pgnString);
-            return View("ViewFile", games);
-        }
-
-        public async Task<IActionResult> UploadFileOld2(IFormFile pgnfile)
-        {
-            // get the file name and save it
-            string filename = $"{DateTime.Now.ToString("yyyyMMddhhss-fffffff")}.pgn";
-            string filepath = System.IO.Path.Combine(_env.WebRootPath, $"pgnfiles\\{filename}");
-
-            await SaveFile(filepath, pgnfile);
-
-            return RedirectToAction("ViewFile", new { id = filename });
-        }
-
         public async Task<IActionResult>UploadFile(IFormFile pgnFile) {
             // save the uploaded file in a temp file for now
             string tempfile = System.IO.Path.GetTempFileName();
@@ -100,27 +81,6 @@ namespace PgnViewerWeb.Controllers
 
             return View("ViewFile", new ViewFileViewModel(filename, response));
         }
-        // using id instead of filename to simplify route url
-        public async Task<IActionResult> ViewFileOld(string id)
-        {
-            if (string.IsNullOrWhiteSpace(id))
-            {
-                throw new ArgumentNullException("id");
-            }
-
-            List<GameSummary> games = await GetGamesFromString(GetPgnStringFromFile(id));
-
-            return View("ViewFile", new ViewFileViewModelOld(id, games));
-        }
-
-        public async Task<IActionResult>ViewGameOld(string id, int index)
-        {
-            string pgnString = GetPgnStringFromFile(id);
-
-            ChessGame game = await GetGamefromString(pgnString, index);
-
-            return View("ViewGame", new ViewGameViewModel(id, index, game));
-        }
 
         public async Task<IActionResult>ViewGame(string filename, int index) {
             string url = $"{GetApiBaseAddress()}/api/Game?filename={filename}&index={index}";
@@ -141,14 +101,7 @@ namespace PgnViewerWeb.Controllers
                 return sr.ReadToEnd();
             }
         }
-
-        private string GetPgnStringFromFile(string id)
-        {
-            string filepath = System.IO.Path.Combine(_env.WebRootPath, $"pgnfiles\\{id}");
-            // TODO: check to see the file is less than 1 MB before reading
-            return System.IO.File.ReadAllText(filepath);
-        }
-
+        
         private async Task<bool> SaveFile(string filepath, IFormFile file)
         {
             using(FileStream fs = new FileStream(filepath, FileMode.CreateNew))
