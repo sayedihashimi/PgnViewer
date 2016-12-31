@@ -26,12 +26,12 @@ function MoveTo(caller, moveId) {
 
     if (moveId > currentMove.moveId) {
         for (var id = currentMove.moveId; id < moveId; id++) {
-            // movesToMake.push(window.moves[id].Move);
             var moveResult = window.chess.move(window.moves[id].Move, { verbose: true });
             if (moveResult) {
                 window.cg6.move(moveResult.from, moveResult.to);
-                MoverookIfCastle(moveResult);
+                HandleCastle(moveResult);
                 HandlePawnPromotion(moveResult);
+                HandleEnPassant(moveResult);
             }
         }
     }
@@ -41,9 +41,10 @@ function MoveTo(caller, moveId) {
             var undoResult = window.chess.undo();
             if (undoResult) {
                 window.cg6.move(undoResult.to, undoResult.from);
-                UndorookIfCastle(undoResult);
-                UndoPlacePieceIfCapture(undoResult);
+                HandleUndoCastle(undoResult);
+                HandleUndoCapture(undoResult);
                 HandleUndoPawnPromotion(undoResult);
+                HandleUndoEnPassant(undoResult);
             }
         }
     }
@@ -64,7 +65,7 @@ function MoveTo(caller, moveId) {
     currentMove.moveId = moveId;
 }
 
-function MoverookIfCastle(moveResult) {
+function HandleCastle(moveResult) {
     if (moveResult && moveResult.flags) {
         if (moveResult.flags.includes(window.chess.FLAGS.KSIDE_CASTLE)) {
             if (moveResult.color === window.chess.WHITE) {
@@ -122,6 +123,39 @@ function HandlePawnPromotion(moveResult) {
     }
 }
 
+function HandleEnPassant(moveResult) {
+    if (moveResult && moveResult.flags && moveResult.flags.includes(window.chess.FLAGS.EP_CAPTURE)) {
+        var pieceToRemove = moveResult.to.charAt(0) + moveResult.from.charAt(1);
+        var pieceMap = {};
+        pieceMap[pieceToRemove] = null;
+        window.cg6.setPieces(pieceMap);
+    }
+}
+
+function HandleUndoEnPassant(moveResult) {
+    if (moveResult && moveResult.flags && moveResult.flags.includes(window.chess.FLAGS.EP_CAPTURE)) {
+        var color = moveResult.color === 'w' ? 'white' : 'black';
+        var pieceMap = {}
+        // after undo move so a piece would have been placed on the to squre that needs to be removed
+        pieceMap[moveResult.to] = null;
+
+        var originalSquare = null;
+        // place pawn on original square
+        if (color === 'white') {
+            var origSquareNum = parseInt(moveResult.to.charAt(1)) - 1;
+            originalSquare = moveResult.to.charAt(0) + origSquareNum;
+            pieceMap[originalSquare] = { role: 'pawn', color: 'black' };
+        }
+        else {
+            var origSquareNum = parseInt(moveResult.to.charAt(1)) + 1;
+            originalSquare = moveResult.to.charAt(0) + origSquareNum;
+            pieceMap[originalSquare] = { role: 'pawn', color: 'white' };
+        }        
+
+        window.cg6.setPieces(pieceMap);
+    }
+}
+
 function HandleUndoPawnPromotion(moveResult) {
     if (moveResult && moveResult.flags && moveResult.flags.includes(window.chess.FLAGS.PROMOTION)) {
         var color = moveResult.color === 'w' ? 'white' : 'black';
@@ -134,7 +168,7 @@ function HandleUndoPawnPromotion(moveResult) {
     }
 }
 
-function UndorookIfCastle(undoResult) {
+function HandleUndoCastle(undoResult) {
     if (undoResult && undoResult.flags) {
         if (undoResult.flags.includes(window.chess.FLAGS.KSIDE_CASTLE)) {
             if (undoResult.color === window.chess.WHITE) {
@@ -157,7 +191,7 @@ function UndorookIfCastle(undoResult) {
     }
 }
 
-function UndoPlacePieceIfCapture(undoResult) {
+function HandleUndoCapture(undoResult) {
     if (undoResult && undoResult.captured && undoResult.captured.length > 0) {
         var pieceToAdd = null;
         var color = 'white';
@@ -190,78 +224,6 @@ function UndoPlacePieceIfCapture(undoResult) {
             var pieceMap = {}
             pieceMap[undoResult.to] = { color: color, role: pieceToAdd};
             window.cg6.setPieces(pieceMap);
-        }
-    }
-}
-
-function MoveToOld(caller, id, playerColor) {
-    alert('movetoOLD:[' + id + '] color:[' + playerColor + ']')
-    // go back to the beginning of the game and play moves until we get to the right move
-
-    while (($uresult = window.chess.undo()) != null) {
-        console.log('undo move called');
-    }
-
-    window.cg6.set({ fen: chess.fen() });
-
-    if (id <= 0) {
-        return;
-    }
-
-    var moves = window.moves;
-    // get the moves
-    for (var i = 0; i < moves.length; i++) {
-        var cMove = moves[i];
-        var cId = cMove.id;
-        var cPlayer = cMove.playerColor;
-
-        // if a move exists for white play it
-        var whiteMove = cMove.whiteMove
-        if (cMove.White) {
-            var movePlayed = window.chess.move(cMove.White, { verbose: true });
-            if (movePlayed) {
-                movesPlayed.push(movePlayed.from + "-" + movePlayed.to);
-                window.cg6.move(movePlayed.from, movePlayed.to);
-            }
-        }
-
-        // play the black move unless this is the last move and move selected was for white
-
-        if (id === (i + 1) && playerColor === 'w') {
-            currentMove = id;
-            currentColor = 'w';
-
-            ground.set({
-                turnColor: chessToColor(chess),
-                movable: {
-                    color: chessToColor(chess),
-                    dests: chessToDests(chess)
-                }
-            });
-            break;
-        }
-
-        if (cMove.Black) {
-            var movePlayed = window.chess.move(cMove.Black, { verbose: true });
-            if (movePlayed) {
-                movesPlayed.push(movePlayed.from + "-" + movePlayed.to);
-                window.cg6.move(movePlayed.from, movePlayed.to);
-            }
-        }
-
-        // stop the loop to prevent extra moves played
-        if (id === (i + 1)) {
-            currentMove = id;
-            currentColor = 'b';
-
-            ground.set({
-                turnColor: chessToColor(chess),
-                movable: {
-                    color: chessToColor(chess),
-                    dests: chessToDests(chess)
-                }
-            });
-            break;
         }
     }
 }
