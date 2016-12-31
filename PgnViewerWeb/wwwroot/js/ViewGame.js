@@ -326,7 +326,47 @@ function MovePrevious() {
     window.moves = JSON.parse(document.getElementById('maingame').getAttribute('data-moves'));
 })();
 
+enquire.register("screen and (max-width:500px)", {
+    match: function () {
+        console.log('match for 500px');
+        $('#ground7').css('height', '200px');
+        $('#ground7').css('width', '200px');
+    }
+});
 
+// 414x736
+
+enquire.register("screen and (min-width:400px) and (max-width:500px)", {
+    match: function () {
+        console.log('match for 400 - 500 px');
+        $('#ground7').css('height', '250px');
+        $('#ground7').css('width', '250px');
+        $('body').css('background-color', 'yellow');
+    }
+});
+
+enquire.register("screen and (min-width:500px) and (max-width:700px)", {
+    match: function () {
+        console.log('match for 500 - 700 px');
+        $('#ground7').css('height', '300px');
+        $('#ground7').css('width', '300px');
+    }
+});
+
+enquire.register("screen and (min-width:700px) and (max-width:1000px)", {
+    match: function () {
+        console.log('match for 700 - 1000 px');
+        $('#ground7').css('height', '400px');
+        $('#ground7').css('width', '400px');
+    }
+});
+enquire.register("screen and (min-width:1100px)", {
+    match: function () {
+        console.log('match for 1100 px');
+        $('#ground7').css('height', '500px');
+        $('#ground7').css('width', '500px');
+    }
+});
 /*
 .chessground.tiny {
   width: 225px;

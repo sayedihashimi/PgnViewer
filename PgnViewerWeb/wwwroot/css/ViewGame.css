@@ -3,10 +3,13 @@
 }
 
 #moveList {
-    background-color: gainsboro;
+    background-color: white;
     height: 100%;
     overflow: hidden;
     overflow-y: scroll;
+    margin: 0px;
+    border:0px;
+    padding: 0 10px 0 10px;
 }
 
 .moveItem {
@@ -15,23 +18,26 @@
     font-size: 14pt;
     color: black;
     text-align: left;
+    background-color: white;
+    padding:0px;
+    margin:0px;
+    border:0px;
 }
 
 .moveId {
-    float: left;
-    width: 30px;
-    text-align:right;
-    height: 100%;
-    background-color: gainsboro;
+    text-align: right;
+    margin: 0px;
+    width:10px;
+    font-weight:bolder;
 }
 
 .move {
     padding-left: 5px;
-    float: left;
-    width: 75px;
+    padding-right: 5px;
     height: 100%;
     background-color: white;
-    padding-left:10px;
+    padding-left: 10px;
+    margin: 0px;
 }
 
 .moveBlack {
@@ -47,3 +53,14 @@
     font-weight:bold;
 }
 
+@media screen and (max-width: 520px) {
+    .moveId {
+        width: 10px;
+        font-size:8px;
+    }
+
+    .move {
+        padding-left: 1px;
+        font-size: 14px;
+    }
+}
