@@ -341,7 +341,6 @@ enquire.register("screen and (min-width:400px) and (max-width:500px)", {
         console.log('match for 400 - 500 px');
         $('#ground7').css('height', '250px');
         $('#ground7').css('width', '250px');
-        $('body').css('background-color', 'yellow');
     }
 });
 
