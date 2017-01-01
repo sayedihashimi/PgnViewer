@@ -19,6 +19,9 @@
     <EmbeddedResource Include="**\*.resx" Exclude="$(GlobalExclude)" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="..\PgnViewer.Shared\Halfmove.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\PgnViewer.Shared\ChessGame.cs">
       <Link>Shared\ChessGame.cs</Link>
     </Compile>
@@ -28,8 +31,8 @@
     <Compile Include="..\PgnViewer.Shared\GameSummary.cs">
       <Link>Shared\GameSummary.cs</Link>
     </Compile>
-    <Compile Include="..\PgnViewer.Shared\Halfmove.cs">
-      <Link>Shared\Halfmove.cs</Link>
+    <Compile Include="..\PgnViewer.Shared\GameSummaryInfo.cs">
+      <Link>Shared\GameSummaryInfo.cs</Link>
     </Compile>
     <Compile Include="..\PgnViewer.Shared\MoveSummary.cs">
       <Link>Shared\MoveSummary.cs</Link>

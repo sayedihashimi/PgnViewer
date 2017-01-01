@@ -77,7 +77,7 @@ namespace PgnViewerWeb.Controllers
         public async Task<IActionResult>ViewFile(string filename) {
             // get the game from the file
             string url = $"{GetApiBaseAddress()}/api/PgnFile?filename={filename}";
-            var response = await url.GetJsonAsync<List<string>>();
+            var response = await url.GetJsonAsync<List<GameSummaryInfo>>();
 
             return View("ViewFile", new ViewFileViewModel(filename, response));
         }

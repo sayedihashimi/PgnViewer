@@ -12,7 +12,6 @@ namespace PgnViewer.Shared
         public int Index { get; set; } = 0;
         public string White { get; set; }
         public string Black { get; set; }
-
         // TODO: Remove pgn from game summary
         public string Pgn { get; set; }
 

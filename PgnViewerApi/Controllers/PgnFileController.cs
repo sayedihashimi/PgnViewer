@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using PgnViewer.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -18,9 +20,10 @@ namespace PgnViewerApi.Controllers {
 
             return filenames;
         }
-        public List<string>GetGamesInFile(string filename, int indexToGet = -1) {
+
+        public List<GameSummaryInfo> GetGamesInFile(string filename, int indexToGet = -1) {
             if (string.IsNullOrWhiteSpace(filename)) { throw new ArgumentNullException("filename"); }
-            filename = filename.Trim();            
+            filename = filename.Trim();
 
             string filepath = $"{PgnFolder}/{filename}";
             if (!File.Exists(filepath)) {
@@ -32,29 +35,53 @@ namespace PgnViewerApi.Controllers {
                 throw new ArgumentException($"Cannot process file with extension {destFileInfo.Extension}");
             }
 
-            PgnGamesReaderWriter gamesRw = new PgnGamesReaderWriter();
-            List<string> pgngames = JsonConvert.DeserializeObject<List<string>>(gamesRw.GetStringFromFile(filepath));
-
-            if(indexToGet >= 0) {
-                return new List<string> {
-                    pgngames[indexToGet]
-                };
+            var indexFilePath = destFileInfo.FullName + ".index";
+            // read and return the index file contents
+            try {
+                var indexResult = JsonConvert.DeserializeObject<List<GameSummaryInfo>>(new PgnGamesReaderWriter().GetStringFromFile(indexFilePath));
+                return indexResult;
+            }
+            catch(Exception ex) {
+                throw new ApplicationException(
+                    string.Format("Unable to read index file at [{0}]", indexFilePath),
+                    ex);
             }
 
-            return pgngames;
+
+            //PgnGamesReaderWriter gamesRw = new PgnGamesReaderWriter();
+            //List<string> pgngames = JsonConvert.DeserializeObject<List<string>>(gamesRw.GetStringFromFile(filepath));
+
+            //if (indexToGet >= 0) {
+            //    return new List<string> {
+            //        pgngames[indexToGet]
+            //    };
+            //}
+
+            //return pgngames;
         }
+
         [HttpPost]
         public HttpResponseMessage UploadFile([FromBody]string pgnfilecontents) {
             if (string.IsNullOrEmpty(pgnfilecontents)) { throw new ArgumentNullException(nameof(pgnfilecontents)); }
 
             var gamesRw = new PgnGamesReaderWriter();
-            List<string> pgngames = gamesRw.GetPgnGamesFromString(pgnfilecontents);
+            
+            List<Tuple<GameSummaryInfo, string>> pgngames = gamesRw.GetPgnGamesFromString(pgnfilecontents);
 
             // save the games to a .pgn.json file
             string filename = $"{DateTime.Now.ToString("yyyyMMddhhss-fffffff")}.pgn.json";
             string filepath = System.Web.Hosting.HostingEnvironment.MapPath($"~/pgnfiles/{filename}");
 
-            gamesRw.SavePgnAsJsonFile(filepath, pgngames);
+            var summaryArray = new GameSummaryInfo[pgngames.Count];
+            var gamesArray = new string[pgngames.Count];
+            for (int i = 0; i < pgngames.Count; i++) {
+                summaryArray[i] = pgngames[i].Item1;
+                gamesArray[i] = pgngames[i].Item2;
+                
+            }            
+            
+            gamesRw.SaveToFileAsJson(filepath, gamesArray);
+            gamesRw.SaveToFileAsJson(filepath+".index", summaryArray);
 
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, "value");
             response.Headers.Location = new Uri($"{Request.RequestUri}?filename={filename}");

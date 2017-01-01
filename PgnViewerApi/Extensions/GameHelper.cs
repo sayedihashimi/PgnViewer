@@ -73,7 +73,37 @@ namespace PgnViewerApi.Extensions
             return result;
         }
 
-        public static Game GetSingleGameFrom(string pgn, int index = 0) {
+        public static GameSummaryInfo BuildGameSummaryInfoFrom(Game game) {
+            if (game == null) { throw new ArgumentNullException(nameof(game)); }
+
+            GameSummaryInfo info = new GameSummaryInfo();
+            info.White = game.WhitePlayer;
+            info.Black = game.BlackPlayer;
+            info.Event = game.Event;
+            info.Year = game.Year.HasValue ? game.Year.ToString() : null;
+            info.Month = game.Month.HasValue ? game.Month.ToString() : null;
+            info.Day = game.Day.HasValue ? game.Day.ToString() : null;
+            
+            switch (game.Result) {
+                case GameResult.White:
+                    info.Result = "1-0";
+                    break;
+                case GameResult.Black:
+                    info.Result = "0-1";
+                    break;
+                case GameResult.Draw:
+                    info.Result = "1/2-1/2";
+                    break;
+                case GameResult.Open:
+                default:
+                    info.Result = null;
+                    break;
+            }
+
+            return info;
+        }
+
+        public static Game GetSingleGameFrom(string pgn, int index = 0,bool verifOnlyOneGame=false) {
             if (pgn == null) { throw new ArgumentNullException(nameof(pgn)); }
 
             if (index < 0) {
@@ -89,6 +119,10 @@ namespace PgnViewerApi.Extensions
             }
             if (game == null) {
                 throw new ApplicationException("Game not found");
+            }
+
+            if(verifOnlyOneGame == true && pgnResult.Games.Count() != 1) {
+                throw new ApplicationException("Found more than one game, when only one was expected");
             }
 
             return game;

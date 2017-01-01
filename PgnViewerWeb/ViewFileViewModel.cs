@@ -10,11 +10,11 @@ namespace PgnViewerWeb
         public ViewFileViewModel() : this(null, null) {
 
         }
-        public ViewFileViewModel(string filename, List<string> games) {
+        public ViewFileViewModel(string filename, List<GameSummaryInfo> games) {
             Filename = filename;
             Games = games;
         }
         public string Filename { get; set; }
-        public List<string> Games { get; set; }
+        public List<GameSummaryInfo> Games { get; set; }
     }    
 }

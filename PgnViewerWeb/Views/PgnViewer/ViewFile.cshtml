@@ -4,7 +4,7 @@
 <ul>
     @for (int index = 0; index < Model.Games.Count(); index++) {
         <li>
-            <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">Game @index</a>
+            <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">@string.Format("{0} - {1} - {2} - {3}",Model.Games[index].Event, Model.Games[index].White, Model.Games[index].Black, Model.Games[index].Result)</a>
         </li>
     }
 </ul>
