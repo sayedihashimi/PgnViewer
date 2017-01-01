@@ -1,0 +1,36 @@
+﻿
+body{
+    font-size:14pt;
+    text-align:left;
+    width:100%;
+}
+
+.gameInfoCell {
+    /*float: left;*/
+    width: 250px;
+}
+
+#gameTable, #gameList{
+    list-style-type:none;
+    background-color:white;
+    width: 100%;
+}
+
+#gameTable,#gameTable tr{
+    width:100%;
+}
+
+#gameTable thead{
+    color:black;
+    background-color:gray;
+    font-weight:bold;
+}
+
+#gameTable * tr td{
+    padding-left:5px;
+    padding-right:5px;
+}
+    
+.gameRow1 {
+    background-color: aliceblue;
+}

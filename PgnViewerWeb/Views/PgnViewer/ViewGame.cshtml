@@ -6,9 +6,13 @@
     string currentId = null;
 }
 
-
-
-
+@section inhead{
+    <link rel="stylesheet" href="/examples/example.css">
+    <link rel="stylesheet" href="/assets/base.css">
+    <link rel="stylesheet" href="/assets/theme.css">
+    <link rel="stylesheet" href="/assets/desktop.css">
+    <link rel="stylesheet" href="/css/ViewGame.css">
+}
 
 <table>
     <tr>
@@ -54,29 +58,11 @@
     </tr>
 </table>
 
-<table>
-    <tr>
-        <td>
-
-        </td>
-
-        <td>
-        </td>
-
-    </tr>
-</table>
-
-@section inhead{
-    <link rel="stylesheet" href="/examples/example.css">
-    <link rel="stylesheet" href="/assets/base.css">
-    <link rel="stylesheet" href="/assets/theme.css">
-    <link rel="stylesheet" href="/assets/desktop.css">
-    <link rel="stylesheet" href="/css/ViewGame.css">
-}
-
-@section scripts{
-    <script src="/chessground.js"></script>
-    <script src="/examples/chess.min.js"></script>
-    <script src="/lib/enquire/dist/enquire.js"></script>
-    <script src="/js/ViewGame.js"></script>    
-}
+<a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@string.Format("{0}",Model.Index-1)"> &lt; Previous (@string.Format("{0}", Model.Index - 1))</a> | 
+<a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@string.Format("{0}",Model.Index+1)">> Next (@string.Format("{0}",Model.Index+1)) </a>
+    @section scripts{
+        <script src="/chessground.js"></script>
+        <script src="/examples/chess.min.js"></script>
+        <script src="/lib/enquire/dist/enquire.js"></script>
+        <script src="/js/ViewGame.js"></script>
+    }

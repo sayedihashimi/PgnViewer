@@ -1,10 +1,52 @@
 ﻿@model PgnViewerWeb.ViewFileViewModel
 @using System.Collections.Generic;
 
-<ul>
+
+@section inhead{
+    <link rel="stylesheet" href="/examples/example.css">
+    <link rel="stylesheet" href="/css/ViewFile.css">
+}
+
+<table id="gameTable">
+    <thead>
+        <tr>
+            <td>Event</td>
+            <td>White</td>
+            <td>Black</td>
+            <td>Result</td>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int index = 0; index < Model.Games.Count(); index++) {
+            var className = "gameRow1";
+            if(index % 2 == 1) {
+                className = "gameRow2";
+            }
+        <tr class="@className">
+            <td><a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">@Model.Games[index].Event</a></td>
+            <td><a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">@Model.Games[index].White</a></td>
+            <td><a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">@Model.Games[index].Black</a></td>
+            <td><a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">@Model.Games[index].Result</a></td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@*<ul id="gameList">
+    <li>
+        <span class="gameInfoCell">Event</span>
+        <span class="gameInfoCell">White</span>
+        <span class="gameInfoCell">Black</span>
+        <span class="gameInfoCell">Result</span>
+    </li>
     @for (int index = 0; index < Model.Games.Count(); index++) {
         <li>
-            <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">@string.Format("{0} - {1} - {2} - {3}",Model.Games[index].Event, Model.Games[index].White, Model.Games[index].Black, Model.Games[index].Result)</a>
+            <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">
+                <span class="gameInfoCell">@Model.Games[index].Event</span>
+                <span class="gameInfoCell">@Model.Games[index].White</span>
+                <span class="gameInfoCell">@Model.Games[index].Black</span>
+                <span class="gameInfoCell">@Model.Games[index].Result</span>
+            </a>
         </li>
     }
-</ul>
+</ul>*@
