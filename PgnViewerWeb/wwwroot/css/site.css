@@ -36,3 +36,11 @@ textarea {
     display: none
   }
 }
+
+footer{
+    font-family:Consolas,monospace;
+    font-size:10pt;
+    text-align: center;
+    width:100%;
+    padding-top:25px;
+}

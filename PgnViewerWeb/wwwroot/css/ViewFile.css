@@ -1,8 +1,8 @@
-﻿
-body{
-    font-size:14pt;
-    text-align:left;
-    width:100%;
+﻿body {
+    font-size: 14pt;
+    text-align: left;
+    width: 100%;
+    counter-reset: moveTable;
 }
 
 .gameInfoCell {
@@ -33,4 +33,9 @@ body{
     
 .gameRow1 {
     background-color: aliceblue;
+}
+
+.tableCounter::before {
+    counter-increment: moveTable;
+    content: counter(moveTable) ": ";
 }
