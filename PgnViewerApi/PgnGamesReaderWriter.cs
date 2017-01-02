@@ -47,7 +47,7 @@ namespace PgnViewerApi {
                 // start of game is detected when
                 //      1. Last line was not a tag
                 //      2. Current line is a tag
-                Regex tagRegex = new Regex(@"\[.*");
+                Regex tagRegex = new Regex(@"^\[.*\]$");
                 while ( (currentLine=streamReader.ReadLine()) != null) {
                     currentLineIsTag = tagRegex.IsMatch(currentLine);
                     if (!previousLineIsTag && currentLineIsTag) {                        

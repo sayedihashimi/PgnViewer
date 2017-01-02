@@ -46,18 +46,6 @@ namespace PgnViewerApi.Controllers {
                     string.Format("Unable to read index file at [{0}]", indexFilePath),
                     ex);
             }
-
-
-            //PgnGamesReaderWriter gamesRw = new PgnGamesReaderWriter();
-            //List<string> pgngames = JsonConvert.DeserializeObject<List<string>>(gamesRw.GetStringFromFile(filepath));
-
-            //if (indexToGet >= 0) {
-            //    return new List<string> {
-            //        pgngames[indexToGet]
-            //    };
-            //}
-
-            //return pgngames;
         }
 
         [HttpPost]

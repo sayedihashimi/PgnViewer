@@ -55,7 +55,6 @@ namespace PgnViewerWeb.Controllers
 
             string url = $"{GetApiBaseAddress()}/api/PgnFile";
             var response = await url.PostJsonAsync(pgncontent);
-            // var resp = await (url.PostJsonAsync(pgncontent)).ReceiveString();
             string filename = null;
             if (response.IsSuccessStatusCode) {
                 // get the location header out of the
@@ -71,7 +70,6 @@ namespace PgnViewerWeb.Controllers
                 System.IO.File.Delete(tempfile);
             }
 
-            // TODO: Update this to correct item after it's been updated
             return RedirectToAction("ViewFile", new { filename = filename });
         }
         public async Task<IActionResult>ViewFile(string filename) {
