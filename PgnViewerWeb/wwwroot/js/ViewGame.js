@@ -326,7 +326,15 @@ function MovePrevious() {
     window.moves = JSON.parse(document.getElementById('maingame').getAttribute('data-moves'));
 })();
 
-enquire.register("screen and (max-width:370px)", {
+enquire.register("screen and (max-width:300px)", {
+    match: function () {
+        console.log('match for 500px');
+        $('#ground7').css('height', '250px');
+        $('#ground7').css('width', '250px');
+    }
+});
+
+enquire.register("screen and (min-width:300px) and (max-width:370px)", {
     match: function () {
         console.log('match for 500px');
         $('#ground7').css('height', '150px');
@@ -354,11 +362,20 @@ enquire.register("screen and (min-width:370px) and (max-width:400px)", {
 
 // iPhone 6+
 // 414x736
-enquire.register("screen and (min-width:400px) and (max-width:500px)", {
+enquire.register("screen and (min-width:400px) and (max-width:420px)", {
     match: function () {
         console.log('match for 400 - 500 px');
-        $('#ground7').css('height', '225px');
-        $('#ground7').css('width', '225px');
+        $('#ground7').css('height', '200px');
+        $('#ground7').css('width', '200px');
+        $('#moveList').css('height', '200px').css('font-size', '10pt');
+    }
+});
+
+enquire.register("screen and (min-width:420px) and (max-width:500px)", {
+    match: function () {
+        console.log('match for 400 - 500 px');
+        $('#ground7').css('height', '230px');
+        $('#ground7').css('width', '230px');
         $('#moveList').css('height', '200px').css('font-size', '10pt');
     }
 });

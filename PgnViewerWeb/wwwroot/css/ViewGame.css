@@ -63,14 +63,54 @@
     font-weight:bold;
 }
 
+#gameControls {
+    list-style-type: none;
+    font-size: 18pt;
+    font-family: Consolas,monospace;
+    font-weight:bold;
+    width:100%;
+    text-align:center;
+}
+
+    #gameControls li {
+        display: inline;
+    }
+
+        #gameControls li span {
+            padding: 5px 10px 5px 10px; /* top right bottom left*/
+            background-color:rgb(32,32,32);
+        }
+
+@media screen and (max-width: 400px) {
+    #moveList{
+        display:none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #gameProperties {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 520px) {
-    .moveId {
+    .moveId; {
         width: 10px;
-        font-size:8px;
+        font-size: 8px;
     }
 
     .move {
         padding-left: 1px;
         font-size: 14px;
     }
+
+    #gameControls {
+        font-size: 12pt;
+    }
+
+        #gameControls li span {
+            padding: 1px 2px 1px 2px; /* top right bottom left*/
+        }
 }
+
+/*screen and (min-width:400px) and (max-width:500px)*/

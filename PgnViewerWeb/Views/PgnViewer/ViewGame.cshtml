@@ -19,16 +19,19 @@
         <td>
             <section>
                 <div id="gameProperties">
-                    <p>
-                        <span>@Model.Game.Event</span><br/>
-                        <span>@Model.Game.White </span>  vs. <span>@Model.Game.Black </span>
-                    </p>
+                    <span>@Model.Game.Event</span><br/>
+                    <span>@Model.Game.White </span>  vs. <span>@Model.Game.Black </span>
                 </div>
 
                 <div class="chessground normal blue cburnett" id="ground7"></div>
 
                 <div>
-                    <p>game controls here</p>
+                    <ul id="gameControls">
+                        <li><span onclick="MoveTo(null, 0);">&lt;&lt;</span></li>
+                        <li><span onclick="MovePrevious();">&lt;</span></li>
+                        <li><span onclick="MoveNext()">&gt;</span></li>
+                        <li><span onclick="MoveTo(null, @Model.Game.Moves.Count()); ">&gt;&gt;</span></li>
+                    </ul>
                 </div>
             </section>
         </td>
