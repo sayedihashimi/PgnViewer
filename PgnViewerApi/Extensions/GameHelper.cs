@@ -31,6 +31,21 @@ namespace PgnViewerApi.Extensions
                 FirstPlayer = isWhiteMove ? "white" : "black"
             };
 
+            switch (game.Result) {
+                case GameResult.White:
+                    result.Result = "0-1";
+                    break;
+                case GameResult.Black:
+                    result.Result = "1-0";
+                    break;
+                case GameResult.Draw:
+                    result.Result = "1/2-1/2";
+                    break;
+                case GameResult.Open:
+                default:
+                    result.Result = string.Empty;
+                    break;
+            }
 
             result.Moves = new List<ChessHalfmove>();
             if (game.MoveText != null && game.MoveText.GetMoves().Count() > 0) {

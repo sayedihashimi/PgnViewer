@@ -81,6 +81,10 @@
             background-color:rgb(32,32,32);
         }
 
+#gameResult{
+    font-weight:bold;
+}
+
 @media screen and (max-width: 400px) {
     #moveList{
         display:none;

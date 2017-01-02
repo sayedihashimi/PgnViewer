@@ -15,6 +15,7 @@ namespace PgnViewer.Shared
         public string Fen { get; set; }
         public string Event { get; set; }
         public string FirstPlayer { get; set; } = "white";
+        public string Result { get; set; }
         public string Pgn { get; set; }
         // public List<ChessMove> Moves { get; set; } = new List<ChessMove>();
         public List<ChessHalfmove> Moves { get; set; } = new List<ChessHalfmove>();
