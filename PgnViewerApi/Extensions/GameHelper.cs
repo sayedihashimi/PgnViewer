@@ -26,6 +26,7 @@ namespace PgnViewerApi.Extensions
                 White = game.WhitePlayer,
                 Black = game.BlackPlayer,
                 Fen = GetFromAdditionalInfo(game, "Fen"),
+                Event = game.Event,
                 Pgn = game.ToString(),
                 FirstPlayer = isWhiteMove ? "white" : "black"
             };

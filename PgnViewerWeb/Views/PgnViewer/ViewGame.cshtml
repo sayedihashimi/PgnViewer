@@ -18,7 +18,18 @@
     <tr>
         <td>
             <section>
+                <div id="gameProperties">
+                    <p>
+                        <span>@Model.Game.Event</span><br/>
+                        <span>@Model.Game.White </span>  vs. <span>@Model.Game.Black </span>
+                    </p>
+                </div>
+
                 <div class="chessground normal blue cburnett" id="ground7"></div>
+
+                <div>
+                    <p>game controls here</p>
+                </div>
             </section>
         </td>
         <td>
@@ -26,16 +37,15 @@
                 <ul id="moveList" class="moveList" style="overflow-y:scroll">
                     @for (var mindex = 0; mindex < Model.Game.Moves.Count(); mindex++) {
                         @if (mindex == 0 && string.Equals("black", Model.Game.FirstPlayer, StringComparison.OrdinalIgnoreCase)) {
-                    WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
+                            WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
                             <span class="moveId">1</span>
                             <span class="move">..</span>
                         }
 
                         @if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
-                            @*<li class="moveItem">*@
-                        WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
-                        <span class="moveId">@currentMoveIndex</span>
-                        <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
+                            WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
+                            <span class="moveId">@currentMoveIndex</span>
+                            <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
                         }
 
                         @if (string.Equals("black", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
