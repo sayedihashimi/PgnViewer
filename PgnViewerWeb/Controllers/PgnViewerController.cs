@@ -83,8 +83,13 @@ namespace PgnViewerWeb.Controllers
         public async Task<IActionResult>ViewGame(string filename, int index) {
             string url = $"{GetApiBaseAddress()}/api/Game?filename={filename}&index={index}";
             var resp = await (url.GetAsync()).ReceiveJson<ChessGame>();
-            
-            return View("ViewGame", new ViewGameViewModel(filename, index, resp));
+
+            // http://localhost:20826/api/PgnFile?getNumGames=true&filename=201701010946-4037908.pgn.json
+            string numGamesUrl = $"{GetApiBaseAddress()}/api/PgnFile?getNumGames=true&filename={filename}";
+            var numGamesStr = await numGamesUrl.GetAsync().ReceiveString();
+            int numGames = int.Parse(numGamesStr);
+
+            return View("ViewGame", new ViewGameViewModel(filename, index, numGames, resp));
         }
 
         private string GetStringFrom(IFormFile file)

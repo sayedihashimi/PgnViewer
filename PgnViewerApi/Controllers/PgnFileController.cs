@@ -26,6 +26,18 @@ namespace PgnViewerApi.Controllers {
             filename = filename.Trim();
 
             string filepath = $"{PgnFolder}/{filename}";
+            return ReadGamesFromFilepath(filepath, indexToGet);
+        }
+
+        public int GetNumGamesInFile(bool getNumGames,string filename) {
+            if (string.IsNullOrWhiteSpace(filename)) { throw new ArgumentNullException("filename"); }
+            filename = filename.Trim();
+
+            string filepath = $"{PgnFolder}/{filename}";
+            return ReadGamesFromFilepath(filepath).Count();
+        }
+
+        private List<GameSummaryInfo>ReadGamesFromFilepath(string filepath,int indexToGet = -1) {
             if (!File.Exists(filepath)) {
                 throw new FileNotFoundException("File not found", filepath);
             }
@@ -41,7 +53,7 @@ namespace PgnViewerApi.Controllers {
                 var indexResult = JsonConvert.DeserializeObject<List<GameSummaryInfo>>(new PgnGamesReaderWriter().GetStringFromFile(indexFilePath));
                 return indexResult;
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
                 throw new ApplicationException(
                     string.Format("Unable to read index file at [{0}]", indexFilePath),
                     ex);

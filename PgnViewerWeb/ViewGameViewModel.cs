@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 
 namespace PgnViewerWeb {
     public class ViewGameViewModel {
-        public ViewGameViewModel() : this(null, -1, null) {
+        public ViewGameViewModel() : this(null, -1, 0, null) {
 
         }
-        public ViewGameViewModel(string filename, int index, ChessGame game) {
+        public ViewGameViewModel(string filename, int index, int numGames, ChessGame game) {
             Filename = filename;
             Index = index;
+            NumGames = numGames;
             Game = game;
             InitMovesAsJson();
         }
         public string Filename { get; set; }
         public int Index { get; set; }
+        public int NumGames { get; set; }
         public ChessGame Game { get; set; }
 
         public string MovesAsJson { get; set; }

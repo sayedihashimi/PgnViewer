@@ -4,6 +4,8 @@
     var currentMovePlayer = Model.Game.FirstPlayer;
     var currentMoveIndex = 1;
     string currentId = null;
+    int prevGameId = Model.Index - 1 >= 0 ? Model.Index - 1 : 0;
+    int nextGameId = Model.Index + 1 < Model.NumGames ? Model.Index + 1 : Model.Index;
 }
 
 @section inhead{
@@ -72,8 +74,8 @@
     </tr>
 </table>
 
-<a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@string.Format("{0}",Model.Index-1)"> &lt; Previous (@string.Format("{0}", Model.Index - 1))</a> | 
-<a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@string.Format("{0}",Model.Index+1)">> Next (@string.Format("{0}",Model.Index+1)) </a>
+<a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@prevGameId"> &lt; Previous (@prevGameId)</a> | 
+<a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@nextGameId">> Next (@nextGameId) </a>
     @section scripts{
         <script src="/chessground.js"></script>
         <script src="/examples/chess.min.js"></script>
