@@ -74,11 +74,17 @@
     </tr>
 </table>
 
-<a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@prevGameId"> &lt; Previous (@prevGameId)</a> | 
-<a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@nextGameId">> Next (@nextGameId) </a>
-    @section scripts{
-        <script src="/chessground.js"></script>
-        <script src="/examples/chess.min.js"></script>
-        <script src="/lib/enquire/dist/enquire.js"></script>
-        <script src="/js/ViewGame.js"></script>
-    }
+<div>
+    <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@prevGameId"> &lt; Previous game (@prevGameId)</a> |
+    <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@nextGameId">> Next game (@nextGameId) </a>
+    <br/>
+    <a asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@Model.Filename">Back to file</a>
+</div>
+
+
+@section scripts{
+    <script src="/chessground.js"></script>
+    <script src="/examples/chess.min.js"></script>
+    <script src="/lib/enquire/dist/enquire.js"></script>
+    <script src="/js/ViewGame.js"></script>
+}
