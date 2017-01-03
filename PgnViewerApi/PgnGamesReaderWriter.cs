@@ -19,7 +19,16 @@ namespace PgnViewerApi {
             // TODO: check to see the file is less than 1 MB before reading
             return System.IO.File.ReadAllText(filepath);
         }
-       
+
+        public void SaveStringToFile(string filepath, string contents) {
+            if (File.Exists(filepath)) {
+                throw new ArgumentException($"Unable to save file because file already exists [{filepath}]");
+            }
+
+            // TODO: Improve
+            File.WriteAllText(filepath, contents);
+        }
+
         public void SaveToFileAsJson(string filepath, object obj) {
             if (File.Exists(filepath)) {
                 throw new ArgumentException($"Cannot write file because file already exists [{filepath}]");
@@ -40,7 +49,7 @@ namespace PgnViewerApi {
             bool currentLineIsTag = false;
             // start this with true so as to not reset to a new game
             bool previousLineIsTag = true;
-            
+
             using (var stream = GenerateStreamFromString(pgncontent))
             using (var streamReader = new StreamReader(stream)) {
                 // append to currentPgnString unless a new start of game is detected
@@ -48,9 +57,9 @@ namespace PgnViewerApi {
                 //      1. Last line was not a tag
                 //      2. Current line is a tag
                 Regex tagRegex = new Regex(@"^\[.*\]$");
-                while ( (currentLine=streamReader.ReadLine()) != null) {
+                while ((currentLine = streamReader.ReadLine()) != null) {
                     currentLineIsTag = tagRegex.IsMatch(currentLine);
-                    if (!previousLineIsTag && currentLineIsTag) {                        
+                    if (!previousLineIsTag && currentLineIsTag) {
                         // Game has ended
                         string currentGame = currentPgnString.ToString();
                         if (!string.IsNullOrWhiteSpace(currentGame)) {
@@ -82,7 +91,7 @@ namespace PgnViewerApi {
 
                 var game = GameHelper.GetSingleGameFrom(lastGame, 0, true);
                 var summary = GameHelper.BuildGameSummaryInfoFrom(game);
-                allGames.Add(new Tuple<GameSummaryInfo, string>(summary, lastGame));                
+                allGames.Add(new Tuple<GameSummaryInfo, string>(summary, lastGame));
             }
 
             // return allgames;
@@ -99,7 +108,7 @@ namespace PgnViewerApi {
             string jsonString = GetStringFromFile(filepath);
             List<string> allgames = JsonConvert.DeserializeObject<List<string>>(jsonString);
 
-            if(indexToGet <0||indexToGet > allgames.Count) {
+            if (indexToGet < 0 || indexToGet > allgames.Count) {
                 throw new ArgumentException($"Index [{indexToGet} is out of bounds]");
             }
 
@@ -113,6 +122,24 @@ namespace PgnViewerApi {
             writer.Flush();
             stream.Position = 0;
             return stream;
+        }
+        public string GetNextAvailableFilename(string folderpath, string filename) {
+            if (!File.Exists(Path.Combine(folderpath, filename))) return filename;
+
+            string alternateFilename;
+            int fileNameIndex = 1;
+            do {
+                fileNameIndex += 1;
+                alternateFilename = CreateNumberedFilename(filename, fileNameIndex);
+            } while (System.IO.File.Exists(Path.Combine(folderpath, alternateFilename)));
+
+            return alternateFilename;
+        }
+
+        private string CreateNumberedFilename(string filename, int number) {
+            string plainName = System.IO.Path.GetFileNameWithoutExtension(filename);
+            string extension = System.IO.Path.GetExtension(filename);
+            return string.Format("{0}{1}{2}", plainName, number, extension);
         }
     }
 }

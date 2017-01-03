@@ -53,9 +53,11 @@ namespace PgnViewerWeb.Controllers
             await SaveFile(tempfile, pgnFile);
             string pgncontent = System.IO.File.ReadAllText(tempfile);
 
-            string url = $"{GetApiBaseAddress()}/api/PgnFile";
+            
+            string url = $"{GetApiBaseAddress()}/api/PgnFile?filename={Path.GetFileName(pgnFile.FileName)}";
             var response = await url.PostJsonAsync(pgncontent);
             string filename = null;
+            
             if (response.IsSuccessStatusCode) {
                 // get the location header out of the
                 Uri newfileurl = response.Headers.Location;
