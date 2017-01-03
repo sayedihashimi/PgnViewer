@@ -12,22 +12,35 @@
     <script src="../chessground.js"></script>
     <script src="chess.min.js"></script>
 
-    <section style="background-color:green;width:100%;height:100%;">
-        <div class="chessground blue cburnett" id="ground7"></div>
-        <span style="background-color:blue;">some other content here</span>
-    </section>
+
+    <ul style="list-style-type:none;display:inline;width:100%;">
+        <li style="display:inline;"><div>one</div></li>
+        <li style="display:inline;"><div>two</div></li>
+    </ul>
+    
+    <ul style="list-style-type:none;">
+        <li style="display:inline;">
+            <section style="background-color:green;width:100%;height:100%;">
+                <div style="height:300px;width:300px;display:inline" class="chessground blue cburnett" id="ground7"></div>
+                <span style="background-color:blue;">some other content here</span>
+            </section>
+        </li>
+        <li style="display:inline;">
+            <h1>header here</h1>
+        </li>
+    </ul>
 
 
     <script>
-            (function () {
-                var ground;
-                var chess = new Chess();
+        (function () {
+            var ground;
+            var chess = new Chess();
 
-                ground = Chessground(document.getElementById('ground7'), {
-                    fen: '2r3k1/pp2Qpbp/4b1p1/3p4/3n1PP1/2N4P/Pq6/R2K1B1R w -'
-                });
-                window.chess = chess;
-                window.cg6 = ground;
+            ground = Chessground(document.getElementById('ground7'), {
+                fen: '2r3k1/pp2Qpbp/4b1p1/3p4/3n1PP1/2N4P/Pq6/R2K1B1R w -'
+            });
+            window.chess = chess;
+            window.cg6 = ground;
         })();
 
         enquire.register("screen and (max-width:500px)", {
