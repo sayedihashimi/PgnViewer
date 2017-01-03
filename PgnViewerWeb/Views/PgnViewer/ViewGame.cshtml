@@ -16,68 +16,12 @@
     <link rel="stylesheet" href="/css/ViewGame.css">
 }
 
-<ul>
-    <li>
-        <section>
-            <div id="gameProperties">
-                <span>@Model.Game.Event</span><br />
-                <span>@Model.Game.White </span>  vs. <span>@Model.Game.Black </span>
-                (<span id="gameResult">@Model.Game.Result</span>)
-            </div>
-
-            <div class="chessground normal blue cburnett" id="ground7"></div>
-
-            <div>
-                <ul id="gameControls">
-                    <li><span onclick="MoveTo(null, 0);">&lt;&lt;</span></li>
-                    <li><span onclick="MovePrevious();">&lt;</span></li>
-                    <li><span onclick="MoveNext()">&gt;</span></li>
-                    <li><span onclick="MoveTo(null, @Model.Game.Moves.Count()); ">&gt;&gt;</span></li>
-                </ul>
-            </div>
-        </section>
-    </li>
-    <li>
-                    <span id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn" data-firstplayer="@Model.Game.FirstPlayer">
-                <ul id="moveList" class="moveList" style="overflow-y:scroll">
-                    @for (var mindex = 0; mindex < Model.Game.Moves.Count(); mindex++) {
-                        @if (mindex == 0 && string.Equals("black", Model.Game.FirstPlayer, StringComparison.OrdinalIgnoreCase)) {
-                            WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
-                            <span class="moveId">1</span>
-                            <span class="move">..</span>
-                        }
-
-                        @if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
-                            WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
-                            <span class="moveId">@currentMoveIndex</span>
-                            <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
-                        }
-
-                        @if (string.Equals("black", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
-                            <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
-                            WriteLiteral(@"</li>");
-                            currentMoveIndex++;
-                        }
-
-                        @* update currentMovePlayer *@
-                        if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
-                            currentMovePlayer = "black";
-                        }
-                        else {
-                            currentMovePlayer = "white";
-                        }
-                    }
-                </ul>
-            </span>
-    </li>
-</ul>
-
 <table>
     <tr>
         <td>
             <section>
                 <div id="gameProperties">
-                    <span>@Model.Game.Event</span><br/>
+                    <span>@Model.Game.Event</span><br />
                     <span>@Model.Game.White </span>  vs. <span>@Model.Game.Black </span>
                     (<span id="gameResult">@Model.Game.Result</span>)
                 </div>
@@ -97,30 +41,36 @@
         <td>
             <span id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn" data-firstplayer="@Model.Game.FirstPlayer">
                 <ul id="moveList" class="moveList" style="overflow-y:scroll">
-                    @for (var mindex = 0; mindex < Model.Game.Moves.Count(); mindex++) {
-                        @if (mindex == 0 && string.Equals("black", Model.Game.FirstPlayer, StringComparison.OrdinalIgnoreCase)) {
+                    @for (var mindex = 0; mindex < Model.Game.Moves.Count(); mindex++)
+                    {
+                        @if (mindex == 0 && string.Equals("black", Model.Game.FirstPlayer, StringComparison.OrdinalIgnoreCase))
+                        {
                             WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
                             <span class="moveId">1</span>
                             <span class="move">..</span>
                         }
 
-                        @if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
+                        @if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase))
+                        {
                             WriteLiteral("\r\n<li class=\"moveItem\">\r\n");
                             <span class="moveId">@currentMoveIndex</span>
                             <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
                         }
 
-                        @if (string.Equals("black", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
+                        @if (string.Equals("black", currentMovePlayer, StringComparison.OrdinalIgnoreCase))
+                        {
                             <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
                             WriteLiteral(@"</li>");
                             currentMoveIndex++;
                         }
 
                         @* update currentMovePlayer *@
-                        if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase)) {
+                        if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase))
+                        {
                             currentMovePlayer = "black";
                         }
-                        else {
+                        else
+                        {
                             currentMovePlayer = "white";
                         }
                     }
@@ -133,7 +83,7 @@
 <div>
     <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@prevGameId"> &lt; Previous game (@prevGameId)</a> |
     <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@nextGameId">> Next game (@nextGameId) </a>
-    <br/>
+    <br />
     <a asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@Model.Filename">Back to file</a>
 </div>
 
