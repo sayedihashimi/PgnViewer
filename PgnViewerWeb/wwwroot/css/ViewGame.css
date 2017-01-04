@@ -1,131 +1,223 @@
-﻿body,html{
-    height:100%;
+﻿body, html {
+    height: 100%;
     width: 100%;
-    margin:0px;
-    padding:0px;
+    margin: 0px;
+    padding: 0px;
+    font-size: 14pt;
+    background: #202020;
+    color: #b0b0b0;
+    text-align: center;
 }
-#maingame {
-    height: 480px;
-    display:inline;
+
+#mainContent {
+    width: 100%;
 }
-#ground7{
-    padding-right:5px;
+
+#ground7 {
+    display: block;
+    height: 250px;
+    width: 250px;
+    padding-right: 5px;
 }
+
+#mainContent {
+    list-style-type: none;
+}
+
+    #mainContent li {
+        display: inline;
+        float: left;
+    }
+
+#moveList {
+    list-style-type: none;
+}
+    #moveList li {
+        display: inline;
+        float: left;
+    }
+
+#gameProperties {
+    display: block;
+    float: none;
+}
+
 #moveList {
     height: 500px;
     overflow: hidden;
     overflow-y: scroll;
     margin: 0px;
-    border:0px;
+    border: 0px;
     padding: 0 10px 0 10px;
     font-size: 14pt;
+    font-family: Consolas,monospace;
+    background-color:white;
 }
 
-.moveItem {
-    list-style-type: none;
-    font-family: Courier New,Lucida Console,Consolas,monospace,sans-serif;
-    font-size: 14pt;
-    color: black;
-    text-align: left;
-    background-color: white;
-    padding:0px;
-    margin:0px;
-    border:0px;
+.moveId, .move {
+    min-width: 60px;
+    float: left;
 }
 
 .moveId {
+    min-width: 35px;
     text-align: right;
-    margin: 0px;
-    width:10px;
-    font-weight:bolder;
-    padding-left:5px;
 }
 
-.move {
-    padding-left: 5px;
-    padding-right: 5px;
+#maingame {
     height: 100%;
-    background-color: white;
-    padding-left: 10px;
-    margin: 0px;
-}
-
-.moveBlack {
-    float: left;
-    width: 75px;
-    height: 100%;
-    background-color: white;
-    padding-left: 10px;
-}
-
-.activeMove{
-    color:red;
-    font-weight:bold;
+    padding-top: 50px;
 }
 
 #gameControls {
     list-style-type: none;
     font-size: 18pt;
     font-family: Consolas,monospace;
-    font-weight:bold;
-    width:100%;
-    text-align:center;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
 }
 
-    #gameControls li {
-        display: inline;
-    }
+#gameFooter {
+    clear: both;
+    width: 100%;
+    text-align: center;
+}
 
-        #gameControls li span {
-            padding: 5px 10px 5px 10px; /* top right bottom left*/
-            background-color:rgb(32,32,32);
-        }
-
-#gameResult{
-    font-weight:bold;
+#gameResult {
+    font-weight: bold;
 }
 
 #mainContent {
-    list-style-type:none;
-    display:inline;
-    background-color:red;
-    width:100%;
+    list-style-type: none;
 }
 
-#mainContent li{
-    display:inline;
-}
-
-@media screen and (max-width: 400px) {
-    #moveList{
-        display:none;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    #gameProperties {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 520px) {
-    .moveId {
-        width: 10px;
-        font-size: 8px;
+    #mainContent li {
+        display: inline;
     }
 
+@media screen and (min-width: 10px) and (max-width: 500px){
     .move {
-        padding-left: 1px;
-        font-size: 14px;
+        float: none;
+        clear: both;
+        height: 300px;
     }
-
-    #gameControls {
+    #moveList{
+        height: 300px;
+    }
+    h2 {
         font-size: 12pt;
+        font-weight: bold;
+    }
+    body {
+        font-size: 10pt;
+    }
+}
+/* iPhone 6 plus */
+@media screen and (min-width: 400px) and (max-width: 500px) {
+    #ground7 {
+        height: 350px;
+        width: 350px;
+    }
+    #moveList {
+        height: 300px;
+    }
+}
+/* iPhone 6 plus rotated */
+@media screen and (min-height: 400px) and (max-height: 500px) {
+    #ground7 {
+        height: 260px;
+        width: 260px;
+    }
+    #moveList {
+        height: 260px;
+    }
+    h2 {
+        font-size: 12pt;
+        font-weight: bold;
     }
 
-        #gameControls li span {
-            padding: 1px 2px 1px 2px; /* top right bottom left*/
-        }
+    body {
+        font-size: 10pt;
+    }
+    #moveList {
+        height: 300px;
+    }
 }
 
-/*screen and (min-width:400px) and (max-width:500px)*/
+
+@media screen and (min-width: 1100px) and (max-width: 1200px) {
+    #ground7 {
+        height: 300px;
+        width: 300px;
+    }
+    #moveList {
+        height: 300px;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1300px) {
+    #ground7 {
+        height: 325px;
+        width: 325px;
+    }
+    #moveList {
+        height: 325px;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1400px) {
+    #ground7 {
+        height: 350px;
+        width: 350px;
+    }
+    #moveList {
+        height: 350px;
+    }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1500px) {
+    #ground7 {
+        height: 350px;
+        width: 350px;
+    }
+    #moveList {
+        height: 350px;
+    }
+}
+
+@media screen and (min-width: 1500px) and (max-width: 1600px) {
+    #ground7 {
+        height: 450px;
+        width: 450px;
+    }
+    #moveList {
+        height: 450px;
+    }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1700px) {
+    #ground7 {
+        height: 550px;
+        width: 550px;
+    }
+    #moveList {
+        height: 450px;
+    }
+}
+
+@media screen and (min-width: 1700px) {
+    #ground7 {
+        height: 650px;
+        width: 650px;
+    }
+    #moveList {
+        height: 650px;
+    }
+}
+/*@media screen and (min-width: 1600px) {
+    #ground7 {
+        height: 800px;
+        width: 800px;
+    }
+}*/

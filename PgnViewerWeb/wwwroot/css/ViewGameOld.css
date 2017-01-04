@@ -1,0 +1,128 @@
+﻿body,html{
+    height:100%;
+    width: 100%;
+    margin:0px;
+    padding:0px;
+}
+#maingame {
+    height: 480px;
+    display:inline;
+}
+#ground7{
+    padding-right:5px;
+}
+#moveList {
+    height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+    margin: 0px;
+    border:0px;
+    padding: 0 10px 0 10px;
+    font-size: 14pt;
+}
+
+.moveItem {
+    list-style-type: none;
+    font-family: Courier New,Lucida Console,Consolas,monospace,sans-serif;
+    font-size: 14pt;
+    color: black;
+    text-align: left;
+    background-color: white;
+    padding:0px;
+    margin:0px;
+    border:0px;
+}
+
+.moveId {
+    text-align: right;
+    margin: 0px;
+    width:10px;
+    font-weight:bolder;
+    padding-left:5px;
+}
+
+.move {
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 100%;
+    background-color: white;
+    padding-left: 10px;
+    margin: 0px;
+}
+
+.moveBlack {
+    float: left;
+    width: 75px;
+    height: 100%;
+    background-color: white;
+    padding-left: 10px;
+}
+
+.activeMove{
+    color:red;
+    font-weight:bold;
+}
+
+#gameControls {
+    list-style-type: none;
+    font-size: 18pt;
+    font-family: Consolas,monospace;
+    font-weight:bold;
+    width:100%;
+    text-align:center;
+}
+
+    #gameControls li {
+        display: inline;
+    }
+
+        #gameControls li span {
+            padding: 5px 10px 5px 10px; /* top right bottom left*/
+            background-color:rgb(32,32,32);
+        }
+
+#gameResult{
+    font-weight:bold;
+}
+
+#mainContent {
+    list-style-type:none;
+}
+
+#mainContent li{
+    display:inline;
+}
+
+@media screen and (max-width: 400px) {
+    #moveList{
+        display:none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #gameProperties {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .moveId {
+        width: 10px;
+        font-size: 8px;
+    }
+
+    .move {
+        padding-left: 1px;
+        font-size: 14px;
+    }
+
+    #gameControls {
+        font-size: 12pt;
+    }
+
+        #gameControls li span {
+            padding: 1px 2px 1px 2px; /* top right bottom left*/
+        }
+}
+
+/*screen and (min-width:400px) and (max-width:500px)*/

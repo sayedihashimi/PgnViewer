@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--<link rel="stylesheet" href="example.css">-->
+    <link rel="stylesheet" href="../assets/base.css">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <link rel="stylesheet" href="../assets/desktop.css">
+    <style>
+        #ground7 {
+            display: block;
+            height: 500px;
+            width: 500px;
+        }
+        ul{
+            list-style-type:none;
+        }
+        ul li{
+            display:inline;
+            float:left;
+        }
+    </style>
+</head>
+<body>
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="../chessground.js"></script>
+    <script src="chess.min.js"></script>
+
+    <ul id="mainContent">
+        <li><div class="chessground blue cburnett" id="ground7"></div></li>
+
+        <li>
+            <div id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn" data-firstplayer="@Model.Game.FirstPlayer">
+                <div>
+                    <span class="moveId">1</span>
+                    <span class="move">e4</span>
+                    <span class="move">e5</span>
+                </div>
+                <div>
+                    <span class="moveId">2</span>
+                    <span class="move">Nf3</span>
+                    <span class="move">Nf6</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+    
+
+
+    <script>
+        (function () {
+            var ground;
+            var chess = new Chess();
+
+            ground = Chessground(document.getElementById('ground7'), {
+                fen: '2r3k1/pp2Qpbp/4b1p1/3p4/3n1PP1/2N4P/Pq6/R2K1B1R w -'
+            });
+            window.chess = chess;
+            window.cg6 = ground;
+        })();        
+    </script>
+</body>
+</html>
