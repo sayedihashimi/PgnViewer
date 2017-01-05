@@ -23,11 +23,12 @@
 <ul id="mainContent">
     <li>
         <div id="gameProperties">
-            <span>@Model.Game.Event</span><br />
+            <span id="gameEvent">@Model.Game.Event</span>
             <span>@Model.Game.White </span>  vs. <span>@Model.Game.Black </span>
             (<span id="gameResult">@Model.Game.Result</span>)
         </div>
-
+    </li>
+    <li>
         <div class="chessground normal blue cburnett" id="ground7"></div>
 
         <div>
@@ -82,10 +83,10 @@
 </ul>
 
 <div id="gameFooter">
-    <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@prevGameId">&lt; Previous game (@prevGameId)</a> |
-    <a asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@nextGameId">Next game (@nextGameId)&gt; </a>
+    <a class="navLink" asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@prevGameId">&lt; Previous game (@prevGameId)</a> |
+    <a class="navLink" asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@nextGameId">Next game (@nextGameId)&gt; </a>
     <br />
-    <a asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@Model.Filename">Back to file</a>
+    <a class="navLink" asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@Model.Filename">Back to file</a>
 </div>
 
 
