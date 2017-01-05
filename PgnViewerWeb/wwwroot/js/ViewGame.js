@@ -261,7 +261,7 @@ function MovePrevious() {
 })();
 
 function HandleOnResize() {
-    var targetWidth = window.innerWidth - 300;
+    var targetWidth = window.innerWidth - 310;
     var targetHeight = window.innerHeight - 80;
     
     if (window.innerWidth < 700) {
@@ -273,8 +273,6 @@ function HandleOnResize() {
     // alert('HandleOnResize called, setting size to ' + lengthSize);
     $("#ground7").css('height', lengthSize);
     $("#ground7").css('width', lengthSize);
-
-    // HandleOnResize
 }
 
 (function () {
