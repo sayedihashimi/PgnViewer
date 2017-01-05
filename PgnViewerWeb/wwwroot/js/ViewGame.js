@@ -57,7 +57,7 @@ function MoveTo(caller, moveId) {
         }
     });
 
-    $("#moveList>li>span").removeClass('activeMove');
+    $('.activeMove').removeClass('activeMove');
     $('#move' + moveId).addClass('activeMove');
 
     var isVisible = 
