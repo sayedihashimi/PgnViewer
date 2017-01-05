@@ -21,42 +21,41 @@
 }
 
 <ul id="mainContent">
-    <li>
-        <div id="gameProperties">
-            <span id="gameEvent">@Model.Game.Event</span>
-            <span>@Model.Game.White </span>  vs. <span>@Model.Game.Black </span>
-            (<span id="gameResult">@Model.Game.Result</span>)
-        </div>
-    </li>
+    
     <li>
         <div class="chessground normal blue cburnett" id="ground7"></div>
 
         <div>
             <div id="gameControls">
-                <span onclick="MoveTo(null, 0);">&lt;&lt;</span>
-                <span onclick="MovePrevious();">&lt;</span>
-                <span onclick="MoveNext()">&gt;</span>
-                <span onclick="MoveTo(null, @Model.Game.Moves.Count()); ">&gt;&gt;</span>
+                <span class="btn btn-default btn-sm" onclick="MoveTo(null, 0);">&lt;&lt;</span>
+                <span class="btn btn-default btn-sm" onclick="MovePrevious();">&lt;</span>
+                <span class="btn btn-default btn-sm" onclick="MoveNext()">&gt;</span>
+                <span class="btn btn-default btn-sm" onclick="MoveTo(null, @Model.Game.Moves.Count()); ">&gt;&gt;</span>
             </div>
         </div>
     </li>
 
     <li>
         <div id="maingame" data-moves="@Model.MovesAsJson" data-fen="@Model.Game.Fen" data-pgn="@Model.Game.Pgn" data-firstplayer="@Model.Game.FirstPlayer">
+            <div id="gameProperties">
+                <span id="gameEvent">@Model.Game.Event</span>
+                <span>@Model.Game.White vs. @Model.Game.Black </span>
+                (<span id="gameResult">@Model.Game.Result</span>)
+            </div>
             <div id="moveList" class="moveList" style="overflow-y:scroll">
                 @for (var mindex = 0; mindex < Model.Game.Moves.Count(); mindex++)
                 {
                     @if (mindex == 0 && string.Equals("black", Model.Game.FirstPlayer, StringComparison.OrdinalIgnoreCase))
                     {
                         WriteLiteral("\r\n<div class=\"moveItem\">\r\n");
-                        <span class="moveId">1</span>
+                        <span style="clear:both;" class="moveId">1</span>
                         <span class="move">..</span>
                     }
 
                     @if (string.Equals("white", currentMovePlayer, StringComparison.OrdinalIgnoreCase))
                     {
                         WriteLiteral("\r\n<div class=\"moveItem\">\r\n");
-                        <span class="moveId">@currentMoveIndex</span>
+                        <span style="clear:both;" class="moveId">@currentMoveIndex</span>
                         <span id="@string.Format("move{0}",@Model.Game.Moves[mindex].Id)" class="move" onclick="MoveTo(this, @Model.Game.Moves[mindex].Id)">@Model.Game.Moves[mindex].Move.ToString()</span>
                     }
 
@@ -94,5 +93,6 @@
     <script src="/chessground.js"></script>
     <script src="/examples/chess.min.js"></script>
     <script src="/lib/enquire/dist/enquire.js"></script>
+    <script src="/js/onresize.js"></script>
     <script src="/js/ViewGame.js"></script>
 }

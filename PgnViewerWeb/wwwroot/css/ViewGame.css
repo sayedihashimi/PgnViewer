@@ -33,10 +33,16 @@
 #gameProperties {
     display: block;
     float: none;
+    text-align:left;
+    max-width:250px;
 }
 
 #gameEvent {
     display: block;
+}
+
+#maingame {
+    padding-left:5px;
 }
 
 #moveList {
@@ -50,8 +56,9 @@
     font-size: 14pt;
     font-family: Consolas,monospace;
     background-color: white;
-    margin-left:10px;
-    text-align:left;
+    margin-left: 10px;
+    text-align: left;
+    max-width:200px;
 }
     #moveList li {
         display: inline;
@@ -69,8 +76,6 @@
     border-right:1px solid black;
     margin-right:2px;
 }
-
-
 
 #gameControls {
     list-style-type: none;
@@ -128,43 +133,24 @@
 }
 /* iPhone 6 plus */
 @media screen and (min-width: 400px) and (max-width: 500px) {
-    #ground7 {
-        height: 390px;
-        width: 390px;
-    }
     #moveList {
         height: 300px;
     }
 }
 
 @media screen and (min-width: 500px) and (max-width: 600px) {
-    #ground7 {
-        height: 490px;
-        width: 490px;
-    }
-
     #moveList {
         height: 400px;
     }
 }
 
 @media screen and (min-width: 600px) and (max-width: 700px) {
-    #ground7 {
-        height: 590px;
-        width: 590px;
-    }
-
     #moveList {
         height: 400px;
     }
 }
 
 @media screen and (min-width: 700px) and (max-width: 800px) {
-    #ground7 {
-        height: 550px;
-        width: 550px;
-    }
-
     #moveList{
         font-size:10pt;
     }
@@ -178,11 +164,6 @@
 }
 
 @media screen and (min-width: 800px) and (max-width: 900px) {
-    #ground7 {
-        height: 600px;
-        width: 600px;
-    }
-
     #moveList {
         font-size: 10pt;
     }
@@ -196,118 +177,8 @@
     }
 }
 
-@media screen and (min-width: 900px) and (max-width: 1000px) {
-    #ground7 {
-        height: 670px;
-        width: 670px;
-    }
-}
-
-@media screen and (min-width: 1000px) and (max-width: 1100px) {
-    #ground7 {
-        height: 770px;
-        width: 770px;
-    }
-}
-
-@media screen and (min-width: 1100px) and (max-width: 1200px) {
-    #ground7 {
-        height: 870px;
-        width: 870px;
-    }
-}
-
-@media screen and (min-width: 1200px) and (max-width: 1300px) {
-    #ground7 {
-        height: 970px;
-        width: 970px;
-    }
-}
-
-@media screen and (min-width: 1300px) and (max-width: 1400px) {
-    #ground7 {
-        height: 1070px;
-        width: 1070px;
-    }
-}
-
-@media screen and (min-width: 1400px) and (max-width: 1500px) {
-    #ground7 {
-        height: 1200px;
-        width: 1200px;
-    }
-}
-
-@media screen and (min-width: 1500px) and (max-width: 1600px) {
-    #ground7 {
-        height: 1270px;
-        width: 1270px;
-    }
-}
-
-@media screen and (min-width: 1600px) and (max-width: 1700px) {
-    #ground7 {
-        height: 1370px;
-        width: 1370px;
-    }
-}
-
-@media screen and (min-width: 1700px) {
-    #ground7 {
-        height: 1500px;
-        width: 1500px;
-    }
-}
-
-@media screen and (min-width: 1800px) {
-    #ground7 {
-        height: 1600px;
-        width: 1600px;
-    }
-}
-
-@media screen and (min-width: 1900px) {
-    #ground7 {
-        height: 1700px;
-        width: 1700px;
-    }
-}
-
-@media screen and (min-width: 2000px) {
-    #ground7 {
-        height: 1800px;
-        width: 1800px;
-    }
-}
-
-@media screen and (min-width: 2150px) {
-    #ground7 {
-        height: 1950px;
-        width: 1950px;
-    }
-}
-
-@media screen and (min-width: 2300px) {
-    #ground7 {
-        height: 2100px;
-        width: 2100px;
-    }
-}
-
-@media screen and (min-width: 2450px) {
-    #ground7 {
-        height: 2250px;
-        width: 2250px;
-    }
-}
-
 /* iPhone 6 plus rotated. Note this uses height instead of width. */
 @media screen and (min-width: 725px) and (max-width: 750px) and (min-height: 410px) and (max-height: 480px) {
-    #ground7 {
-        height: 380px;
-        width: 380px;
-    }
-
     #moveList {
         height: 260px;
     }

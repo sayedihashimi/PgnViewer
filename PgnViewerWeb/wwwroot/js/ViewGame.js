@@ -260,6 +260,23 @@ function MovePrevious() {
 
 })();
 
+function HandleOnResize() {
+    var targetWidth = window.innerWidth - 300;
+    var targetHeight = window.innerHeight - 80;
+    
+    if (window.innerWidth < 700) {
+        targetWidth = window.innerWidth - 25;
+    }
+
+    var lengthSize = targetWidth < targetHeight ? targetWidth : targetHeight;
+
+    // alert('HandleOnResize called, setting size to ' + lengthSize);
+    $("#ground7").css('height', lengthSize);
+    $("#ground7").css('width', lengthSize);
+
+    // HandleOnResize
+}
+
 (function () {
     var ground;
     var fen = document.getElementById('maingame').getAttribute('data-fen')
@@ -324,7 +341,14 @@ function MovePrevious() {
     window.cg6 = ground;
 
     window.moves = JSON.parse(document.getElementById('maingame').getAttribute('data-moves'));
+
+    var onresize = new OnResize();
+    onresize.add(HandleOnResize);
+
+    HandleOnResize();
 })();
+
+
 
 //enquire.register("screen and (max-width:300px)", {
 //    match: function () {
