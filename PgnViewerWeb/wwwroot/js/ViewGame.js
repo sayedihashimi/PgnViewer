@@ -260,7 +260,7 @@ function MovePrevious() {
 
 })();
 
-function HandleOnResizeOld() {
+function HandleOnResize() {
     var moveListWidth = $('#moveList').height + 20;
     var targetWidth = window.innerWidth - moveListWidth;
     var targetHeight = window.innerHeight - 80;
