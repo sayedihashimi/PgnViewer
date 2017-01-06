@@ -260,12 +260,13 @@ function MovePrevious() {
 
 })();
 
-function HandleOnResize() {
-    var targetWidth = window.innerWidth - 310;
+function HandleOnResizeOld() {
+    var moveListWidth = $('#moveList').height + 20;
+    var targetWidth = window.innerWidth - moveListWidth;
     var targetHeight = window.innerHeight - 80;
-    
+
     if (window.innerWidth < 700) {
-        targetWidth = window.innerWidth - 25;
+        targetWidth = window.innerWidth - moveListWidth;
     }
 
     var lengthSize = targetWidth < targetHeight ? targetWidth : targetHeight;

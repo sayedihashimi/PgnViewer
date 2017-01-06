@@ -139,20 +139,17 @@
 }
 
 @media screen and (min-width: 1px) and (max-width: 300px) {
-    /*#gameControls{
-        display:none;
-    }*/
     #gameControls{
         font-size:8pt;
         margin:0;
     }
+    #mainContent {
+        -webkit-padding-start: 2px;
+    }
 }
 
-
-
-/* iPhone 6 plus */
 @media screen and (min-width: 400px) and (max-width: 500px) {
-    #moveList; {
+    #moveList {
         height: 300px;
     }
 }
@@ -201,15 +198,8 @@
     #moveList{
         font-size:24pt;
     }
-    .moveId, .move {
-        /*min-width: 75px;*/
-    }
-    .moveId {
-        /*min-width: 40px;*/
-    }
 }
 
-    /* iPhone 6 plus rotated. Note this uses height instead of width. */
     @media screen and (min-width: 725px) and (max-width: 750px) and (min-height: 410px) and (max-height: 480px) {
         #moveList {
             height: 260px;
@@ -233,11 +223,3 @@
             font-style: italic;
         }
     }
-
-
-    /*@media screen and (min-width: 1600px) {
-    #ground7 {
-        height: 800px;
-        width: 800px;
-    }
-}*/
