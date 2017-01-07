@@ -250,14 +250,14 @@ function MovePrevious() {
     document.onkeydown = function (e) {
         if (e.keyCode === 37) {
             if (!!window.event.shiftKey) {
-                window.location.href = $("#prevGameLink").attr('href');
+                NavigateToPrevFile();
             }
             // arrow left
             MovePrevious();
         }
         else if (e.keyCode === 39) {
             if (!!window.event.shiftKey) {
-                window.location.href = $("#nextGameLink").attr('href');
+                NavigateToNextFile();
             }
             // arrow right
             MoveNext();
@@ -266,11 +266,76 @@ function MovePrevious() {
 
 })();
 
+function NavigateToNextFile() {
+    window.location.href = $("#nextGameLink").attr('href');
+}
+function NavigateToPrevFile() {
+    window.location.href = $("#prevGameLink").attr('href');
+}
+
+// http://stackoverflow.com/a/23230280/105999
+document.addEventListener('touchstart', handleTouchStart, false);
+document.addEventListener('touchmove', handleTouchMove, false);
+
+var xDown = null;
+var yDown = null;
+
+function handleTouchStart(evt) {
+    xDown = evt.touches[0].clientX;
+    yDown = evt.touches[0].clientY;
+};
+
+function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+        if (xDiff > 0) {
+            /* left swipe */
+            if (evt.touches.length > 1) {
+                // two finger swipe
+                NavigateToNextFile();
+            }
+            else {
+                // 1 finger swipe
+                MoveNext();
+            }
+        }
+        else {
+            /* right swipe */
+            if (evt.touches.length > 1) {
+                // two finger swipe
+                NavigateToPrevFile();
+            }
+            else {
+                // 1 finger swipe
+                MovePrevious();
+            }
+        }
+    } else {
+        if (yDiff > 0) {
+            /* up swipe */
+        } else {
+            /* down swipe */
+        }
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;
+};
+
 function HandleOnResize() {
     var moveListWidth = $('#moveList').width() + 20;
 
-    var wWidth = window.innerWidth;
-    var wHeight = window.innerHeight;
+    var wWidth = document.documentElement.clientWidth;
+    var wHeight = document.documentElement.clientHeight;
 
     var lenShortsideOfWindow = window.innerHeight < window.innerWidth ? window.innerHeight : window.innerWidth;
 
@@ -286,13 +351,16 @@ function HandleOnResize() {
         // vertical layout
         boardSize = wHeight - 20;
 
-        var sizeBasedOnWidth = wWidth - 70;
+        var sizeBasedOnWidth = wWidth;
+        
         var sizeBasedOnHeight = wHeight - 80;
         boardSize = sizeBasedOnWidth < sizeBasedOnHeight ? sizeBasedOnWidth : sizeBasedOnHeight;
     }
 
     $("#ground7").css('height', boardSize)
         .css('width', boardSize);
+
+    $("#moveList").css('height', boardSize - $("#gameProperties").height());
 }
 
 (function () {
@@ -364,86 +432,7 @@ function HandleOnResize() {
     onresize.add(HandleOnResize);
 
     HandleOnResize();
+
+    $('body').animate({
+        scrollTop: $('#ground7').offset().top + 'px'}, '100');
 })();
-
-
-
-//enquire.register("screen and (max-width:300px)", {
-//    match: function () {
-//        console.log('match for 500px');
-//        $('#ground7').css('height', '250px');
-//        $('#ground7').css('width', '250px');
-//    }
-//});
-
-//enquire.register("screen and (min-width:300px) and (max-width:370px)", {
-//    match: function () {
-//        console.log('match for 500px');
-//        $('#ground7').css('height', '150px');
-//        $('#ground7').css('width', '150px');
-//        $('#moveList').css('height', '180px').css('font-size', '10pt');
-//        $('.moveId').css('display', 'none');
-//    },
-//    unmatch: function () {
-//        $('#moveList').css('font-size', '14pt');
-//        $('.moveId').css('display', 'inline');
-//    }
-//});
-
-//// iPhone 6
-//// 375x667
-//enquire.register("screen and (min-width:370px) and (max-width:400px)", {
-//    match: function () {
-//        console.log('match for 400 - 500 px');
-//        $('#ground7').css('height', '200px');
-//        $('#ground7').css('width', '200px');
-//        $('#moveList').css('height', '180px').css('font-size', '10pt');
-        
-//    }
-//});
-
-//// iPhone 6+
-//// 414x736
-//enquire.register("screen and (min-width:400px) and (max-width:420px)", {
-//    match: function () {
-//        console.log('match for 400 - 500 px');
-//        $('#ground7').css('height', '200px');
-//        $('#ground7').css('width', '200px');
-//        $('#moveList').css('height', '200px').css('font-size', '10pt');
-//    }
-//});
-
-//enquire.register("screen and (min-width:420px) and (max-width:500px)", {
-//    match: function () {
-//        console.log('match for 400 - 500 px');
-//        $('#ground7').css('height', '230px');
-//        $('#ground7').css('width', '230px');
-//        $('#moveList').css('height', '200px').css('font-size', '10pt');
-//    }
-//});
-
-//enquire.register("screen and (min-width:500px) and (max-width:700px)", {
-//    match: function () {
-//        console.log('match for 500 - 700 px');
-//        $('#ground7').css('height', '300px');
-//        $('#ground7').css('width', '300px');
-//        $('#moveList').css('height', '280px');
-//    }
-//});
-
-//enquire.register("screen and (min-width:700px) and (max-width:1000px)", {
-//    match: function () {
-//        console.log('match for 700 - 1000 px');
-//        $('#ground7').css('height', '400px');
-//        $('#ground7').css('width', '400px');
-//        $('#moveList').css('height', '380px');
-//    }
-//});
-//enquire.register("screen and (min-width:1100px)", {
-//    match: function () {
-//        console.log('match for 1100 px');
-//        $('#ground7').css('height', '700px');
-//        $('#ground7').css('width', '700px');
-//        $('#moveList').css('height', '680px');
-//    }
-//});
