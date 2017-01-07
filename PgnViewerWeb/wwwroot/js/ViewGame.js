@@ -261,19 +261,32 @@ function MovePrevious() {
 })();
 
 function HandleOnResize() {
-    var moveListWidth = $('#moveList').height + 20;
-    var targetWidth = window.innerWidth - moveListWidth;
-    var targetHeight = window.innerHeight - 80;
+    var moveListWidth = $('#moveList').width() + 20;
 
-    if (window.innerWidth < 700) {
-        targetWidth = window.innerWidth - moveListWidth;
+    var wWidth = window.innerWidth;
+    var wHeight = window.innerHeight;
+
+    var lenShortsideOfWindow = window.innerHeight < window.innerWidth ? window.innerHeight : window.innerWidth;
+
+    var heightOffset = 80;
+    var boardSize = 500;
+    if (wWidth > 700) {
+        // horizontal layout
+        var sizeBasedOnWidth = wWidth - moveListWidth;
+        var sizeBasedOnHeight = wHeight - heightOffset;
+        boardSize = sizeBasedOnWidth < sizeBasedOnHeight ? sizeBasedOnWidth : sizeBasedOnHeight;
+    }
+    else {
+        // vertical layout
+        boardSize = wHeight - 20;
+
+        var sizeBasedOnWidth = wWidth - 70;
+        var sizeBasedOnHeight = wHeight - 80;
+        boardSize = sizeBasedOnWidth < sizeBasedOnHeight ? sizeBasedOnWidth : sizeBasedOnHeight;
     }
 
-    var lengthSize = targetWidth < targetHeight ? targetWidth : targetHeight;
-
-    // alert('HandleOnResize called, setting size to ' + lengthSize);
-    $("#ground7").css('height', lengthSize);
-    $("#ground7").css('width', lengthSize);
+    $("#ground7").css('height', boardSize)
+        .css('width', boardSize);
 }
 
 (function () {
