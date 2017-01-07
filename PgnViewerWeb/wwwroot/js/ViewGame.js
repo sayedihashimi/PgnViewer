@@ -249,10 +249,16 @@ function MovePrevious() {
 (function () {
     document.onkeydown = function (e) {
         if (e.keyCode === 37) {
+            if (!!window.event.shiftKey) {
+                window.location.href = $("#prevGameLink").attr('href');
+            }
             // arrow left
             MovePrevious();
         }
         else if (e.keyCode === 39) {
+            if (!!window.event.shiftKey) {
+                window.location.href = $("#nextGameLink").attr('href');
+            }
             // arrow right
             MoveNext();
         }
