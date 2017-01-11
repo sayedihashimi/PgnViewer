@@ -29,7 +29,7 @@ footer{
     padding-left:5px;
 }
 
-.navLink:visited, .navLink:link, .navLink:active, .navLink:hover {
+.navLink, .navLink:visited, .navLink:link, .navLink:active, .navLink:hover {
     color: rgb(176, 176, 176);
     text-decoration: none;
     text-align: left;

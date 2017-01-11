@@ -7,7 +7,7 @@
 <ul>
     @foreach(var item in Model){
         <li>
-            <a asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@item">@item</a>
+            <a class="navLink" asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@item">@item</a>
         </li>
     }
 </ul>
