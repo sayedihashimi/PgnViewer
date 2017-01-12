@@ -4,18 +4,21 @@
     <link rel="stylesheet" href="/css/ViewFile.css">
 }
 
-<ul>
-    @foreach(var item in Model){
-        <li>
-            <a class="navLink" asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@item">@item</a>
-        </li>
-    }
-</ul>
+<div id="content">
+    <h2>Select a file to view it's games</h2>
+    <ul class="filelist">
+        @foreach (var item in Model) {
+            <li>
+                <a asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@item">@item</a>
+            </li>
+        }
+    </ul>
 
-<form asp-action="UploadFile"
-      asp-controller="PgnViewer"
-      method="Post"
-      enctype="multipart/form-data">
-    <input type="file" name="pgnfile" />
-    <input type="submit" value="Upload pgn" />
-</form>
+    <form asp-action="UploadFile"
+          asp-controller="PgnViewer"
+          method="Post"
+          enctype="multipart/form-data">
+        <input type="file" name="pgnfile" />
+        <input type="submit" value="Upload pgn" />
+    </form>
+</div>

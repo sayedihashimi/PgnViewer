@@ -35,3 +35,27 @@ footer{
     text-align: left;
     width: 100%;
 }
+
+#content{
+    margin-left:30px;
+    margin-top:20px;
+}
+
+#content h2{
+    
+}
+
+.filelist {
+    list-style-type:disc;
+}
+
+.filelist li a {
+    color: rgb(176, 176, 176);
+    text-align: left;
+    width: 100%;
+}
+
+
+
+
+
