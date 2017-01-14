@@ -23,12 +23,16 @@
 
         <div>
             <div id="gameControls">
-                <span class="btn btn-default btn-sm" onclick="MoveTo(null, 0);">&lt;&lt;</span>
-                <span class="btn btn-default btn-sm" onclick="MovePrevious();">&lt;</span>
-                <span class="btn btn-default btn-sm" onclick="MoveNext()">&gt;</span>
-                <span class="btn btn-default btn-sm" onclick="MoveTo(null, @Model.Game.Moves.Count()); ">&gt;&gt;</span>
+                <button type="button" class="btn" onclick="MoveTo(null, 0);">&lt;&lt;</button>
+
+                <button type="button" class="btn" onclick="MovePrevious();">&lt;</button>
+
+                <button type="button" class="btn" onclick="MoveNext();">&gt;</button>
+
+                <button type="button" class="btn" onclick="MoveTo(null, @Model.Game.Moves.Count()); ">&gt;&gt;</button>
             </div>
         </div>
+
     </li>
 
     <li>

@@ -361,6 +361,11 @@ function HandleOnResize() {
         .css('width', boardSize);
 
     $("#moveList").css('height', boardSize - $("#gameProperties").height());
+
+    buttonWidth = Math.floor((boardSize-50)/4);
+
+    // resize game control buttons
+    $('#gameControls button').css('width', buttonWidth);
 }
 
 (function () {

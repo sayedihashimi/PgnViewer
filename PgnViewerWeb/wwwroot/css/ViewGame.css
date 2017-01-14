@@ -42,7 +42,7 @@
 }
 
 #maingame {
-    padding:0;
+    padding: 0;
 }
 
 #moveList {
@@ -79,6 +79,7 @@
 }
 
 #gameControls {
+    margin-top: 10px;
     list-style-type: none;
     font-size: 18pt;
     font-family: Consolas,monospace;
@@ -86,6 +87,26 @@
     width: 100%;
     text-align: center;
 }
+
+    #gameControls button {
+        /*width: 100px;*/
+        color: black;
+        background-color: ghostwhite;
+        font-weight: bold;
+        font-size: 20pt;
+        border: 1px solid;
+        border-radius: 10px;
+    }
+
+        #gameControls button button30 {
+
+        }
+
+        #gameControls button button60 {
+        }
+
+        #gameControls button button80 {
+        }
 
 #gameFooter {
     clear: both;
@@ -115,6 +136,24 @@
         display: inline;
     }
 
+/*@media screen and (max-width:300px) {
+    #gameControls button {
+        width: 30px;
+        font-size: 14pt;
+    }
+}
+@media screen and (min-width:300px) and (max-width:400px) {
+    #gameControls button {
+        width: 60px;
+        font-size: 16pt;
+    }
+}
+@media screen and (min-width:400px) and (max-width:500px) {
+    #gameControls button {
+        width: 80px;
+        font-size: 16pt;
+    }
+}*/
 /*@media screen and (min-width: 1px) and (max-width: 700px) {
     body {
         font-size: 10pt;
