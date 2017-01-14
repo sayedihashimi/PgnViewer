@@ -15,7 +15,12 @@ namespace PgnViewerApi.Controllers {
             string[]files = Directory.GetFiles(PgnFolder, "*.pgn.json", SearchOption.TopDirectoryOnly);
             List<string> filenames = new List<string>();
             foreach(var f in files) {
-                filenames.Add(new FileInfo(f).Name);
+                var fname = new FileInfo(f).Name;
+                if (fname.EndsWith(".pgn.json")) {
+                    fname = fname.Substring(0, fname.Length - 9);
+                }
+
+                filenames.Add(fname);
             }
 
             return filenames;
@@ -25,6 +30,10 @@ namespace PgnViewerApi.Controllers {
             if (string.IsNullOrWhiteSpace(filename)) { throw new ArgumentNullException("filename"); }
             filename = filename.Trim();
 
+            if(!filename.EndsWith(".pgn.json", StringComparison.OrdinalIgnoreCase)) {
+                filename += ".pgn.json";
+            }
+
             string filepath = $"{PgnFolder}/{filename}";
             return ReadGamesFromFilepath(filepath, indexToGet);
         }
@@ -32,6 +41,10 @@ namespace PgnViewerApi.Controllers {
         public int GetNumGamesInFile(bool getNumGames,string filename) {
             if (string.IsNullOrWhiteSpace(filename)) { throw new ArgumentNullException("filename"); }
             filename = filename.Trim();
+
+            if (!filename.EndsWith(".pgn.json", StringComparison.OrdinalIgnoreCase)) {
+                filename += ".pgn.json";
+            }
 
             string filepath = $"{PgnFolder}/{filename}";
             return ReadGamesFromFilepath(filepath).Count();

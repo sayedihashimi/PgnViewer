@@ -14,6 +14,7 @@ namespace PgnViewerWeb
             Filename = filename;
             Games = games;
         }
+
         public string Filename { get; set; }
         public List<GameSummaryInfo> Games { get; set; }
     }    

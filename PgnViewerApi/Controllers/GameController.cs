@@ -14,7 +14,11 @@ namespace PgnViewerApi.Controllers {
         private string PgnFolder { get; } = System.Web.Hosting.HostingEnvironment.MapPath($"~/pgnfiles");
 
         public ChessGame GetGame(string filename, int index) {
-            string filepath = $"{PgnFolder}/{filename}";
+            if (!filename.EndsWith(".pgn.json", StringComparison.OrdinalIgnoreCase)) {
+                filename += ".pgn.json";
+            }
+
+            string filepath = $"{PgnFolder}/{filename}";            
             var gamesRw = new PgnGamesReaderWriter();
             string gamePgn = gamesRw.GetGameFromFile(filepath, index);
             var game = GameHelper.BuildChessGameFrom(gamePgn);
