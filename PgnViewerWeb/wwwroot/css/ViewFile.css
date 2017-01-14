@@ -39,3 +39,11 @@
     counter-increment: moveTable;
     content: counter(moveTable) ": ";
 }
+
+#filenameHeader h2{
+    display:inline;
+}
+
+#downloadLink, #downloadLink:visited, #downloadLink:link, #downloadLink:active, #downloadLink:hover {
+    text-decoration: underline;
+}

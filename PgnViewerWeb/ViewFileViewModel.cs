@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 namespace PgnViewerWeb
 {
     public class ViewFileViewModel {
-        public ViewFileViewModel() : this(null, null) {
+        public ViewFileViewModel() : this(null,null, null) {
 
         }
-        public ViewFileViewModel(string filename, List<GameSummaryInfo> games) {
+        public ViewFileViewModel(string filename, string downloadUrl, List<GameSummaryInfo> games) {
             Filename = filename;
             Games = games;
+            DownloadUrl = downloadUrl;
         }
 
         public string Filename { get; set; }
+        public string DownloadUrl { get; set; }
         public List<GameSummaryInfo> Games { get; set; }
     }    
 }
