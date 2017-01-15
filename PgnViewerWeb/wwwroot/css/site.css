@@ -55,18 +55,26 @@ footer{
     width: 100%;
 }
 
+.contentTable, .contentList {
+    list-style-type: none;
+    background-color: white;
+}
 
+    .contentTable, .contentTable tr {
+        width:100%;
+    }
 
-/*.button {
-    background-color: #4CAF50;
-    background-color: black;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px;
-    font-weight: bold;
-    
-}*/
+        .contentTable thead {
+            color: black;
+            background-color: gray;
+            font-weight: bold;
+        }
+
+        .contentTable * tr td {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+.contentRow1 {
+    background-color: aliceblue;
+}

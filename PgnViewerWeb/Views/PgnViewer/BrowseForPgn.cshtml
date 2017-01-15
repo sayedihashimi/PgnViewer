@@ -6,13 +6,27 @@
 
 <div id="content">
     <h2>Select a file to view it's games</h2>
-    <ul class="filelist">
-        @foreach (var item in Model) {
-            <li>
-                <a asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@item">@item</a>
-            </li>
-        }
-    </ul>
+    <table class="contentTable">
+        @*<thead>
+            <tr>
+                <td>filename</td>
+            </tr>
+        </thead>*@
+        <tbody>
+            @for (int index = 0; index < Model.Count(); index++) {
+                var item = Model[index];
+                var className = "contentRow1";
+                if (index % 2 == 1) {
+                    className = "contentRow2";
+                }
+                <tr class="@className">
+                    <td>
+                            <a class="@className" asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@item">@item</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+    </table>
 
     <form asp-action="UploadFile"
           asp-controller="PgnViewer"

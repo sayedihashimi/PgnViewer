@@ -85,7 +85,7 @@
     <a id="prevGameLink" class="navLink" asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@prevGameId">&lt; Previous game (@prevGameId)</a> |
     <a id="nextGameLink" class="navLink" asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@nextGameId">Next game (@nextGameId)&gt; </a>
     <br />
-    <a class="navLink" asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@Model.Filename">Back to file</a>
+    <a class="navLink" asp-controller="PgnViewer" asp-action="ViewFile" asp-route-filename="@Model.Filename">Back to file - @Model.Filename</a>
 </div>
 
 

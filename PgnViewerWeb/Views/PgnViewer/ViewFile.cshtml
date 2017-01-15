@@ -9,7 +9,7 @@
 
 <h2  id="filenameHeader" style="display:inline;">@Model.Filename</h2> - <a class="navLink" id="downloadLink" href="@Model.DownloadUrl" download=".pgn" target="_blank">download</a>
 <h3>Select a game</h3>
-<table id="gameTable">
+<table class="contentTable">
     <thead>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Event</td>
@@ -20,9 +20,9 @@
     </thead>
     <tbody>
         @for (int index = 0; index < Model.Games.Count(); index++) {
-            var className = "gameRow1";
+            var className = "contentRow1";
             if(index % 2 == 1) {
-                className = "gameRow2";
+                className = "contentRow2";
             }
         <tr class="@className">
             <td><a class="tableCounter" asp-controller="PgnViewer" asp-action="ViewGame" asp-route-filename="@Model.Filename" asp-route-index="@index">@Model.Games[index].Event</a></td>
