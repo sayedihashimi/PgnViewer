@@ -60,7 +60,7 @@ function MoveTo(caller, moveId) {
     $('.activeMove').removeClass('activeMove');
     $('#move' + moveId).addClass('activeMove');
 
-    var isVisible = 
+    // var isVisible = 
 
     currentMove.moveId = moveId;
 }
